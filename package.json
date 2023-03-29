@@ -1,0 +1,26 @@
+{
+  "name": "@kazumatu981/markdown-it-fontawesome",
+  "version": "0.0.1",
+  "description": "markdown-it plugin to be able to use fontawesome",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "watch": "tsc -w",
+    "build": "tsc",
+    "clean": "tsc -b --clean",
+    "demo": "marp -s -c demo/marp.config.cjs"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@jest/globals": "^29.5.0",
+    "@marp-team/marp-cli": "^2.4.0",
+    "@tsconfig/node16": "^1.0.3",
+    "@types/jest": "^29.5.0",
+    "@types/markdown-it": "^12.2.3",
+    "@types/node": "^18.15.10",
+    "jest": "^29.5.0",
+    "ts-jest": "^29.0.5",
+    "typescript": "^5.0.2"
+  }
+}
