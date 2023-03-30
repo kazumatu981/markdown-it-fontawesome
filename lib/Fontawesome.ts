@@ -39,8 +39,9 @@ export class fontawesomeTagParser {
             && this._state.src.charCodeAt(this._state.pos + 1) === 0x66
             // 'a'
             && this._state.src.charCodeAt(this._state.pos + 2) === 0x61
-            // ' '
-            && this._state.src.charCodeAt(this._state.pos + 3) === 0x20);
+            // ' ' or '-'
+            && (this._state.src.charCodeAt(this._state.pos + 3) === 0x20
+                || this._state.src.charCodeAt(this._state.pos + 3) === 0x2D));
 
     }
     public get startPosOfFaClasses(): number {
