@@ -1,9 +1,11 @@
+import MarkdownIt from "markdown-it";
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
-
+import { FontawesomeOption } from "../../FontawesomeOption";
+import { detectFaTagPattern } from "../TagDetector";
 /**
  * engine class
  */
-export class FontawesomeTagParser {
+export class FontawesomeTagRule {
 
     //#region "private storage of properties"
     private _state: StateInline;
@@ -23,7 +25,7 @@ export class FontawesomeTagParser {
     // #region "public propertis"
     public get hasFontawesomeTag(): boolean {
         if (this._hasFontawesomeTag === null) {
-            this._hasFontawesomeTag = this._parse();
+            this._hasFontawesomeTag = this._detectTag();
         }
         return this._hasFontawesomeTag;
     }
@@ -108,7 +110,7 @@ export class FontawesomeTagParser {
     // #endregion
 
     // #region "private method"
-    private _parse(): boolean {
+    private _detectTag(): boolean {
         if (!(this._tokenMatchLong && this._startsWithMark && this._canFindEndOfMark)) {
             return false;
         }
@@ -116,6 +118,7 @@ export class FontawesomeTagParser {
     }
     // #endregion
 }
+
 
 /**
  * Entry point of this plugin-engine.
@@ -126,5 +129,9 @@ export class FontawesomeTagParser {
  * @returns fontawesome-tag is included in current callet wether or not.
  */
 export function fontawesome(state: StateInline, silent: boolean): boolean {
-    return (new FontawesomeTagParser(state, silent)).run();
+    return (new FontawesomeTagRule(state, silent)).run();
+}
+
+export function registerFontawesomeTag(md: MarkdownIt, opt: FontawesomeOption | undefined) {
+    md.inline.ruler.push('fontawesome', fontawesome);
 }

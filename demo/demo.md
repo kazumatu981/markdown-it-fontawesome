@@ -15,7 +15,7 @@ theme: my-theme
 
 ## Simple Icons
 
-### Family And Style
+### Family
 
 :fa fa-user: `:fa fa-user:`
 :fa-solid fa-user: `:fa-solid fa-user:`
@@ -30,7 +30,9 @@ theme: my-theme
 
 ## Style
 
-[:fa-solid fa-building:]{.red} [:fa-solid fa-building:]{.blue} [:fa-solid fa-building:]{.green}
+`[:fa-solid fa-building:]{.red}` [:fa-solid fa-building:]{.red}
+`[:fa-solid fa-building:]{.blue}` [:fa-solid fa-building:]{.blue}
+`[:fa-solid fa-building:]{.green}` [:fa-solid fa-building:]{.green}
 
 ---
 
@@ -38,24 +40,14 @@ theme: my-theme
 
 ### Stacking
 
-  [:fa-solid fa-camera fa-stack-1x: :fa-solid fa-ban fa-stack-2x:]{.fa-stack fa-2x} 
+[:fa-solid fa-camera fa-stack-1x: [:fa-solid fa-ban fa-stack-2x:]{.red}] `[:fa-solid fa-camera fa-stack-1x: [:fa-solid fa-ban fa-stack-2x:]{.red}]`
+
+[[:fa-solid fa-camera fa-stack-1x:]{.blue} [:fa-solid fa-ban fa-stack-2x:]{.red}] `[[:fa-solid fa-camera fa-stack-1x:]{.blue} [:fa-solid fa-ban fa-stack-2x:]{.red}]`
   
-  ```markdown
-  [:fa-solid fa-camera fa-stack-1x: :fa-solid fa-ban fa-stack-2x:]{.fa-stack fa-2x}
-  ```
-
 ---
 
+## List
 
-:fa-solid fa-arrow-right fa-2x fa-pull-right fa-border: Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.
-
-```markdown
-:fa-solid fa-arrow-right fa-2x fa-pull-right fa-border: Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.
-```
----
-
-:fa-solid fa-quote-left fa-2x fa-pull-left:Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.
-
-```markdown
-:fa-solid fa-quote-left fa-2x fa-pull-left:Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that’s no matter — tomorrow we will run faster, stretch our arms further... And one fine morning — So we beat on, boats against the current, borne back ceaselessly into the past.
-```
+* :fa-solid fa-cube: abc
+* :fa-solid fa-cube: def
+* :fa-solid fa-cube: ccc
