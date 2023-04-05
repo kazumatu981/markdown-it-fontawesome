@@ -1,6 +1,6 @@
 import MarkdownIt from "markdown-it";
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
-import { FontawesomeOption } from "../../FontawesomeOption";
+import { FontawesomeOption } from "../FontawesomeOption";
 import { detectFaTagPattern } from "../TagDetector";
 /**
  * engine class

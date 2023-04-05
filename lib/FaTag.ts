@@ -1,9 +1,9 @@
 import MarkdownIt from "markdown-it";
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
-import { FontawesomeOption } from "../FontawesomeOption";
+import { FontawesomeOption } from "./FontawesomeOption";
 import { createTokenizer } from "./FaTagTokenizer";
 
-export class FaTagCore {
+export class FaTag {
     _md: MarkdownIt;
     _option: FontawesomeOption;
     constructor(md: MarkdownIt, option: FontawesomeOption | undefined) {
@@ -21,6 +21,9 @@ export class FaTagCore {
         return detected;
     }
     use() {
-        this._md.inline.ruler.push('fontawesome_tag', (state, silent) => { return this.rule(state, silent); })
+        this._md.inline.ruler.push('fontawesome_tag',
+            (state, silent) => {
+                return this.rule(state, silent);
+            });
     }
 }

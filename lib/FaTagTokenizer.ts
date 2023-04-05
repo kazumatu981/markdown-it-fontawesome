@@ -1,5 +1,5 @@
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
-import { FontawesomeOption } from "../FontawesomeOption";
+import { FontawesomeOption } from "./FontawesomeOption";
 import { DetectedFaTag, detectFaTagPattern, FaTag, StackingFaTag } from "./TagDetector";
 
 export function createTokenizer(
@@ -62,12 +62,12 @@ abstract class FaTokenizerBase {
     }
 }
 
-class FaTagTokenizer extends FaTokenizerBase {
+export class FaTagTokenizer extends FaTokenizerBase {
     protected _tokenize(): void {
         this._pushFaTag(<FaTag>this._detectedTag.parsed);
     }
 }
-class StackingTokenizer extends FaTokenizerBase {
+export class StackingTokenizer extends FaTokenizerBase {
     protected _tokenize(): void {
         this._pushStackingTag(<StackingFaTag>this._detectedTag.parsed);
     }
