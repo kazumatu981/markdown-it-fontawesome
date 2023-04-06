@@ -1,10 +1,10 @@
 import MarkdownIt from "markdown-it";
-import { FaTag } from "./FaTag";
+import { FaTagRuleEngine } from "./FaTagRuleEngine";
 import { registerFontawesomeList } from "./FontawesomeList"
 import { FontawesomeOption } from "./FontawesomeOption";
 
 function markdownItFontawesome(md: MarkdownIt, opt?: FontawesomeOption): void {
-    (new FaTag(md, opt)).use();
+    (new FaTagRuleEngine(md, opt)).use();
     registerFontawesomeList(md);
 }
 

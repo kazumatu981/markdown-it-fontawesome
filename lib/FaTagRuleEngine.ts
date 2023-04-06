@@ -3,7 +3,7 @@ import StateInline from "markdown-it/lib/rules_inline/state_inline";
 import { FontawesomeOption } from "./FontawesomeOption";
 import { createTokenizer } from "./FaTagTokenizer";
 
-export class FaTag {
+export class FaTagRuleEngine {
     _md: MarkdownIt;
     _option: FontawesomeOption;
     constructor(md: MarkdownIt, option: FontawesomeOption | undefined) {
