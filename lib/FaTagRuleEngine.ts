@@ -2,14 +2,9 @@ import MarkdownIt from "markdown-it";
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
 import { FontawesomeOption } from "./FontawesomeOption";
 import { createTokenizer } from "./FaTagTokenizer";
+import { FaTagRuleEngineBase } from "./FaTagRuleEngineBase";
 
-export class FaTagRuleEngine {
-    _md: MarkdownIt;
-    _option: FontawesomeOption;
-    constructor(md: MarkdownIt, option: FontawesomeOption | undefined) {
-        this._md = md;
-        this._option = (option !== undefined) ? option : { ignoreStyled: false };
-    }
+export class FaTagRuleEngine extends FaTagRuleEngineBase {
 
     rule(state: StateInline, silent: boolean): boolean {
         var detected = false;
@@ -21,7 +16,8 @@ export class FaTagRuleEngine {
         return detected;
     }
     use() {
-        this._md.inline.ruler.push('fontawesome_tag',
+        this._md.inline.ruler.push(
+            'fontawesome_tag',
             (state, silent) => {
                 return this.rule(state, silent);
             });
