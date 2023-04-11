@@ -51,3 +51,9 @@ theme: my-theme
 * :fa-solid fa-cube: abc
 * :fa-solid fa-cube: def
 * :fa-solid fa-cube: ccc
+
+## Styled List
+
+* [:fa-solid fa-cube:]{.red} abc
+* [:fa-solid fa-cube:]{.green} def
+* [:fa-solid fa-cube:]{.blue} ccc
