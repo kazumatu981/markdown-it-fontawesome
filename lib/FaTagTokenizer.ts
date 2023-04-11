@@ -5,7 +5,7 @@ import { DetectedFaTag, detectFaTagPattern, FaTag, StackingFaTag } from "./TagDe
 export function createTokenizer(
     state: StateInline, silent: boolean, option: FontawesomeOption
 ): FaTokenizerBase | null {
-    const pattern = detectFaTagPattern(state.src, state.pos, option.ignoreStyled);
+    const pattern = detectFaTagPattern(state.src, state.pos, option.ignoreStyled ?? false);
     var tokenizer: FaTokenizerBase | null = null;
 
     if (pattern != null) {

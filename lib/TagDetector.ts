@@ -56,7 +56,25 @@ export function detectFaTagPattern(str: string, pos: number, ignoreStyled: boole
     return detected;
 }
 
+export function tagToString(tag: FaTag): string {
+    if (tag.styleClasses !== null) {
+        return `[:${tag.faClasses}:]{${tag.styleClasses}}`;
 
+    } else {
+        return `:${tag.faClasses}:`;
+    }
+
+}
+export function addStyleClass(tag: FaTag, styleClass: string): FaTag {
+    if (tag.styleClasses === null) {
+        tag.styleClasses = "";
+    }
+    const classes = tag.styleClasses.split(" ")
+        .filter(item => item !== '');
+    classes.push(`.${styleClass}`);
+    tag.styleClasses = classes.join(" ");
+    return tag;
+}
 //#region "private methods."
 function _startsWithTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
     const result = _startsWithRegEx(source, faTag);
