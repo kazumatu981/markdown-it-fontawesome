@@ -48,12 +48,12 @@ theme: my-theme
 
 ## List
 
-* :fa-solid fa-cube: abc
-* :fa-solid fa-cube: def
-* :fa-solid fa-cube: ccc
+* :fa-solid fa-cube: first item
+* :fa-solid fa-cube: second item
+* :fa-solid fa-cube: third item
 
 ## Styled List
 
-* [:fa-solid fa-cube:]{.red} abc
-* [:fa-solid fa-cube:]{.green} def
-* [:fa-solid fa-cube:]{.blue} ccc
+* [:fa-solid fa-cube:]{.red} first item
+* [:fa-solid fa-cube:]{.green} second item
+* [:fa-solid fa-cube:]{.blue} third item
