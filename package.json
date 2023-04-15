@@ -1,6 +1,6 @@
 {
   "name": "@kazumatu981/markdown-it-fontawesome",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "markdown-it plugin to be able to use fontawesome",
   "main": "index.js",
   "keywords": [
@@ -20,7 +20,8 @@
     "build": "tsc",
     "clean": "tsc -b --clean",
     "predemo": "npm run build",
-    "demo": "marp -s -c demo/marp.config.cjs"
+    "demo": "marp -s -c demo/marp.config.cjs",
+    "prepublish": "npm run build"
   },
   "author": "kazumatu981@gmail.com",
   "license": "MIT",
