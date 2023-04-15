@@ -1,5 +1,6 @@
 ---
 marp: true
+theme: my-theme
 ---
 
 <style>
@@ -12,16 +13,47 @@ marp: true
 
 ---
 
-## Embeded HTML Sample (current)
+## Simple Icons
 
-<i class="fa fa-code-branch"> </i>
+### Family
+
+:fa fa-user: `:fa fa-user:`
+:fa-solid fa-user: `:fa-solid fa-user:`
+:fa-regular fa-user: `:fa-regular fa-user:`
+
+### Animate
+
+:fa-solid fa-rotate fa-spin: `:fa-solid fa-rotate fa-spin:`
+:fa-solid fa-heart fa-beat: `:fa-solid fa-heart fa-beat:`
 
 ---
 
-## Using this plugin
+## Style
 
-:fa fa-sharp fa-solid fa-house:
-:fa fa-solid fa-camera-retro fa-fade:
+`[:fa-solid fa-building:]{.red}` [:fa-solid fa-building:]{.red}
+`[:fa-solid fa-building:]{.blue}` [:fa-solid fa-building:]{.blue}
+`[:fa-solid fa-building:]{.green}` [:fa-solid fa-building:]{.green}
 
+---
 
-:fa fa-sharp fa-solid fa-hippo:
+## Advanced Usage
+
+### Stacking
+
+[:fa-solid fa-camera fa-stack-1x: [:fa-solid fa-ban fa-stack-2x:]{.red}] `[:fa-solid fa-camera fa-stack-1x: [:fa-solid fa-ban fa-stack-2x:]{.red}]`
+
+[[:fa-solid fa-camera fa-stack-1x:]{.blue} [:fa-solid fa-ban fa-stack-2x:]{.red}] `[[:fa-solid fa-camera fa-stack-1x:]{.blue} [:fa-solid fa-ban fa-stack-2x:]{.red}]`
+  
+---
+
+## List
+
+* :fa-solid fa-cube: first item
+* :fa-solid fa-cube: second item
+* :fa-solid fa-cube: third item
+
+## Styled List
+
+* [:fa-solid fa-cube:]{.red} first item
+* [:fa-solid fa-cube:]{.green} second item
+* [:fa-solid fa-cube:]{.blue} third item

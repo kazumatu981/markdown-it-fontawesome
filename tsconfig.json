@@ -11,7 +11,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "baseUrl": "./types",
+    "paths": {
+      "markdown-it/lib/rules_block/*": [
+        "markdown-it/lib/rules_block/*"
+      ]
+    }
   },
   "exclude": [
     "node_modules",

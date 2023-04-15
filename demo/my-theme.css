@@ -1,0 +1,19 @@
+/* @theme my-theme */
+@import-theme 'default';
+
+span.red {
+    color: red;
+}
+
+span.blue {
+    color: blue;
+}
+
+span.green {
+    color: green;
+
+}
+
+ul.fa-ul {
+    margin-left: 1em;
+}

@@ -1,8 +1,7 @@
 
 module.exports = {
     inputDir: './',
-    engine: ({ marp }) => marp.use(require('../index')),
-    html: {
-        i: ["class"]
-    }
+    themeSet: './my-theme.css',
+    engine: ({ marp }) => marp
+        .use(require('../index'))
 }

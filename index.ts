@@ -1,6 +1,3 @@
-import MarkdownIt from "markdown-it";
-import { fontawesome } from "./lib/Fontawesome";
+const markdownItFontawesome = require("./lib");
 
-module.exports = (md: MarkdownIt) => {
-    md.inline.ruler.push('fontawesome', fontawesome);
-}
+module.exports = markdownItFontawesome;
