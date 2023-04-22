@@ -1,3 +1,6 @@
 coverage
 node_modules
 *.js
+dist
+*.tgz
+sandbox
