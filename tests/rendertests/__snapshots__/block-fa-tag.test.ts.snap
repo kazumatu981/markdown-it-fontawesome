@@ -1,5 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Inline FaTag Tests. not render for odered list. 1`] = `
+"<ol>
+<li><span class="red"><i class="fa-user"></i></span> test001</li>
+<li><i class="fa-user"></i> test002</li>
+<li><i class="fa-user"></i> test003</li>
+</ol>
+"
+`;
+
+exports[`Inline FaTag Tests. styled simple tag in a list 1`] = `
+"<ul class="fa-ul">
+<li><span class="red fa-li"><i class="fa-user"></i></span> test001</li>
+<li><span class="fa-li"><i class="fa-user"></i></span> test002</li>
+<li><span class="fa-li"><i class="fa-user"></i></span> test003</li>
+</ul>
+"
+`;
+
+exports[`Inline FaTag Tests. very simple tag in a list 1`] = `
+"<ul class="fa-ul">
+<li><span class="fa-li"><i class="fa-user"></i></span> test001</li>
+<li><span class="fa-li"><i class="fa-user"></i></span> test002</li>
+<li><span class="fa-li"><i class="fa-user"></i></span> test003</li>
+</ul>
+"
+`;
+
 exports[`Inline FaTag Tests. very simple tag in a list' 1`] = `
 "<ul class="fa-ul">
 <li><span class="fa-li"><i class="fa-user"></i></span> test001</li>
