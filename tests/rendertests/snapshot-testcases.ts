@@ -34,11 +34,27 @@ export const InlineFaTagTest: SnapShotTestCase[] = [
 
 export const BlockFaTagTest: SnapShotTestCase[] = [
     {
-        description: "very simple tag in a list'",
+        description: "very simple tag in a list",
         markdown: `
 * :fa-user: test001
 * :fa-user: test002
 * :fa-user: test003
+`
+    },
+    {
+        description: "styled simple tag in a list",
+        markdown: `
+* [:fa-user:]{.red} test001
+* :fa-user: test002
+* :fa-user: test003
+`
+    },
+    {
+        description: "not render for odered list.",
+        markdown: `
+1. [:fa-user:]{.red} test001
+2. :fa-user: test002
+3. :fa-user: test003
 `
     }
 ]
