@@ -22,7 +22,7 @@ export class FaTagListTokenReplacer {
         }
         const allStartWithFaItem = this.contents.every(item => {
             const detected = detectFaTagPattern(item.content, 0, false);
-            return detected?.kind === 'simple' || detected?.kind === 'styled';
+            return detected?.kind === 'simple';
         });
         return allStartWithFaItem;
     }

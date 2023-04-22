@@ -24,7 +24,7 @@ export const FaTagRegEx = {
 /**
  * The kinds of Fontawesome tags
  */
-export declare type FaTagKind = "simple" | "styled" | "simpleStacking" | "stacking";
+export declare type FaTagKind = "simple" | "stacking";
 /**
  * result of detector.
  */
@@ -83,7 +83,7 @@ function _startsWithTag(source: string, ignoreStyled: boolean): DetectedFaTag | 
         if (result.indexOf('{') > 0) {
             if (!ignoreStyled) {
                 return {
-                    kind: "styled", tag: result,
+                    kind: "simple", tag: result,
                     parsed: _parseFaTag(result)
                 };
             }
@@ -109,7 +109,7 @@ function _startsWithStacking(source: string, ignoreStyled: boolean): DetectedFaT
             }
         } else {
             return {
-                kind: "simpleStacking", tag: result,
+                kind: "stacking", tag: result,
                 parsed: _parseStackingTag(result)
             };
         }

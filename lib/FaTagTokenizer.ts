@@ -2,28 +2,7 @@ import StateInline from "markdown-it/lib/rules_inline/state_inline";
 import { FontawesomeOption } from "./FontawesomeOption";
 import { DetectedFaTag, detectFaTagPattern, FaTag, StackingFaTag } from "./TagDetector";
 
-export function createTokenizer(
-    state: StateInline, silent: boolean, option: FontawesomeOption
-): FaTokenizerBase | null {
-    const pattern = detectFaTagPattern(state.src, state.pos, option.ignoreStyled ?? false);
-    var tokenizer: FaTokenizerBase | null = null;
-
-    if (pattern != null) {
-        switch (pattern.kind) {
-            case "simple":
-            case "styled":
-                tokenizer = new FaTagTokenizer(state, silent, pattern);
-                break;
-            case "simpleStacking":
-            case "stacking":
-                tokenizer = new StackingTokenizer(state, silent, pattern);
-                break;
-        }
-    }
-    return tokenizer;
-}
-
-abstract class FaTokenizerBase {
+export abstract class FaTokenizerBase {
     _stateInline: StateInline;
     _silent: boolean;
     _detectedTag: DetectedFaTag
@@ -59,6 +38,24 @@ abstract class FaTokenizerBase {
         if (!this._silent) {
             this._tokenize();
         }
+    }
+    public static createTokenizer(
+        state: StateInline, silent: boolean, option: FontawesomeOption
+    ): FaTokenizerBase | null {
+        const pattern = detectFaTagPattern(state.src, state.pos, option.ignoreStyled ?? false);
+        var tokenizer: FaTokenizerBase | null = null;
+
+        if (pattern != null) {
+            switch (pattern.kind) {
+                case "simple":
+                    tokenizer = new FaTagTokenizer(state, silent, pattern);
+                    break;
+                case "stacking":
+                    tokenizer = new StackingTokenizer(state, silent, pattern);
+                    break;
+            }
+        }
+        return tokenizer;
     }
 }
 
