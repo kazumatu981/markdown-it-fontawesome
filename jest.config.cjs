@@ -2,4 +2,9 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "lib/**/*.ts",
+    "!lib/**/obs/**/*.ts"
+  ]
 };
