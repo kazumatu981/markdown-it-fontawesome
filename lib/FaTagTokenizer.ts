@@ -1,6 +1,6 @@
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
 import { FontawesomeOption } from "./FontawesomeOption";
-import { DetectedFaTag, detectFaTagPattern, FaTag, StackingFaTag } from "./TagDetector";
+import { DetectedFaTag, detectFaTagPattern, DetectedSimpleTag, DetectedStackingTag } from "./TagDetector";
 
 export abstract class FaTokenizerBase {
     _stateInline: StateInline;
@@ -11,7 +11,7 @@ export abstract class FaTokenizerBase {
         this._silent = silent;
         this._detectedTag = detectedTag;
     }
-    protected _pushStackingTag(stackingTag: StackingFaTag) {
+    protected _pushStackingTag(stackingTag: DetectedStackingTag) {
         const stackingIconTag = this._stateInline.push('fa_icon_stacking_open', 'span', 1);
         stackingIconTag.attrPush(['class', "fa-stack"]);
         for (const fatag of stackingTag) {
@@ -19,7 +19,7 @@ export abstract class FaTokenizerBase {
         }
         this._stateInline.push('fa_icon_stacking_close', 'span', -1);
     }
-    protected _pushFaTag(fatag: FaTag): void {
+    protected _pushFaTag(fatag: DetectedSimpleTag): void {
         if (fatag.styleClasses != null) {
             const iconTag = this._stateInline.push('fa_icon_style_open', 'span', 1);
             iconTag.attrPush(['class', fatag.styleClasses.replaceAll('.', '')]);
@@ -61,11 +61,11 @@ export abstract class FaTokenizerBase {
 
 export class FaTagTokenizer extends FaTokenizerBase {
     protected _tokenize(): void {
-        this._pushFaTag(<FaTag>this._detectedTag.parsed);
+        this._pushFaTag(<DetectedSimpleTag>this._detectedTag.parsed);
     }
 }
 export class StackingTokenizer extends FaTokenizerBase {
     protected _tokenize(): void {
-        this._pushStackingTag(<StackingFaTag>this._detectedTag.parsed);
+        this._pushStackingTag(<DetectedStackingTag>this._detectedTag.parsed);
     }
 }

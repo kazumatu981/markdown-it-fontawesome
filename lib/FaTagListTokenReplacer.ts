@@ -1,6 +1,6 @@
 import StateBlock from "markdown-it/lib/rules_block/state_block"
 import Token from "markdown-it/lib/token"
-import { detectFaTagPattern, FaTag, addStyleClass, tagToString } from "./TagDetector"
+import { detectFaTagPattern, DetectedSimpleTag, addStyleClass, tagToString } from "./TagDetector"
 
 interface TokenRplaceMarker {
     start: number,
@@ -50,7 +50,7 @@ export class FaTagListTokenReplacer {
 
         this.contents.forEach(item => {
             const detected = detectFaTagPattern(item.content, 0, false);
-            var faTag = <FaTag>detected?.parsed;
+            var faTag = <DetectedSimpleTag>detected?.parsed;
             faTag = addStyleClass(faTag, "fa-li");
             item.content = item.content.replace(
                 <string>detected?.tag, tagToString(faTag));
