@@ -1,13 +1,10 @@
-import { RuleBlock } from "markdown-it/lib/parser_block"
-import defaultList from "markdown-it/lib/"
-import MarkdownIt from "markdown-it";
 import StateBlock from "markdown-it/lib/rules_block/state_block"
 import list from 'markdown-it/lib/rules_block/list';
-import { FaTagRuleEngineBase } from "./FaTagRuleEngineBase";
+import { MarkdownItEngineBase } from "./MarkdownItEngineBase";
 import { FaTagListTokenReplacer } from "./FaTagListTokenReplacer";
+import { FontawesomeOption } from "./FontawesomeOption";
 
-
-export class FaTagListRuleEngine extends FaTagRuleEngineBase {
+export class FaTagListRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
     jack(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
         const newTokenStart = state.tokens.length;
         const ret = list(state, startLine, endLine, silent);
