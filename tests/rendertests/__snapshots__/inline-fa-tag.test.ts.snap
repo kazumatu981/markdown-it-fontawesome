@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Inline FaTag Tests. simple tag. ':fa fa-user:' 1`] = `
+"<p><i class="fa fa-user"></i></p>
+"
+`;
+
+exports[`Inline FaTag Tests. stacking simple tag. '[:fa fa-yyy: :fa fa-xxx:]' 1`] = `
+"<p><span class="fa-stack"><i class="fa fa-yyy"></i><i class="fa fa-xxx"></i></span></p>
+"
+`;
+
+exports[`Inline FaTag Tests. stacking styled tag. '[[:fa fa-yyy:]{.red} [:fa fa-xxx:]{.blue}]' 1`] = `
+"<p><span class="fa-stack"><span class="red"><i class="fa fa-yyy"></i></span><span class="blue"><i class="fa fa-xxx"></i></span></span></p>
+"
+`;
+
+exports[`Inline FaTag Tests. styled tag (malti style). '[:fa fa-user:]{.red .big}' 1`] = `
+"<p><span class="red big"><i class="fa fa-user"></i></span></p>
+"
+`;
+
+exports[`Inline FaTag Tests. styled tag. '[:fa fa-user:]{.red}' 1`] = `
+"<p><span class="red"><i class="fa fa-user"></i></span></p>
+"
+`;
+
+exports[`Inline FaTag Tests. very simple tag. ':fa fa-user:' 1`] = `
+"<p><i class="fa-user"></i></p>
+"
+`;

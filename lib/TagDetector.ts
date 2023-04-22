@@ -119,17 +119,13 @@ function _startsWithStacking(source: string, ignoreStyled: boolean): DetectedFaT
 
 function _parseFaTag(tag: string): FaTag {
     // read fa classes
-    const faFound = (new RegExp(faClassesTag, "g")).exec(tag);
-    if (faFound !== null) {
-        // read style classes
-        const styleFound = (new RegExp(styleClassesTag, "g")).exec(tag);
-        if (styleFound !== null) {
-            return { faClasses: faFound[0], styleClasses: styleFound[0] };
-        }
-        return { faClasses: faFound[0], styleClasses: null };
-    } else {
-        throw new Error('Unexpected!!, fa classes not found.');
+    const faFound = <RegExpExecArray>(new RegExp(faClassesTag, "g")).exec(tag);
+    // read style classes
+    const styleFound = (new RegExp(styleClassesTag, "g")).exec(tag);
+    if (styleFound !== null) {
+        return { faClasses: faFound[0], styleClasses: styleFound[0] };
     }
+    return { faClasses: faFound[0], styleClasses: null };
 }
 
 function _parseStackingTag(tag: string): StackingFaTag {

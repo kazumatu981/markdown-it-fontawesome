@@ -133,6 +133,7 @@ describe('TagDetector', () => {
             { test: "[:fa-test: :fa-testb:]", pos: 0, ignoreStyled: false, expected: { kind: "simpleStacking", tag: "[:fa-test: :fa-testb:]", parsed: [{ faClasses: "fa-test", styleClasses: null }, { faClasses: "fa-testb", styleClasses: null }] } },
             { test: "[:fa-test: [:fa-testb:]{.red}]", pos: 0, ignoreStyled: false, expected: { kind: "stacking", tag: "[:fa-test: [:fa-testb:]{.red}]", parsed: [{ faClasses: "fa-test", styleClasses: null }, { faClasses: "fa-testb", styleClasses: ".red" }] } },
             { test: "[:fa-test: [:fa-testb:]{.red}]", pos: 0, ignoreStyled: true, expected: null },
+            { test: " [:fa-test: [:fa-testb:]{.red}]", pos: 0, ignoreStyled: true, expected: null },
         ];
         for (const testItem of TEST_DATA) {
             test(`Test for '${testItem.test}', expected: ${JSON.stringify(testItem.expected)}`, () => {
