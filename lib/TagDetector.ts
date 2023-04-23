@@ -41,40 +41,6 @@ export interface DetectedSimpleTag {
 
 export declare type DetectedStackingTag = DetectedSimpleTag[]
 
-// export function detectFaTagPattern(str: string, pos: number, ignoreStyled: boolean): DetectedFaTag | null {
-//     // if not start with 0x3A(:) or 0x5B([) then returns null.
-//     if (str.charCodeAt(pos) !== 0x3A && str.charCodeAt(pos) !== 0x5B) {
-//         return null;
-//     }
-//     // slice from pos
-//     const source = str.slice(pos);
-//     // detect!
-//     let detected = _detectSimpleTag(source, ignoreStyled);
-//     if (detected === null) {
-//         detected = _detectStackingTag(source, ignoreStyled);
-//     }
-//     return detected;
-// }
-
-export function tagToString(tag: DetectedSimpleTag): string {
-    if (tag.styleClasses !== null) {
-        return `[:${tag.faClasses}:]{${tag.styleClasses}}`;
-
-    } else {
-        return `:${tag.faClasses}:`;
-    }
-
-}
-export function addStyleClass(tag: DetectedSimpleTag, styleClass: string): DetectedSimpleTag {
-    if (tag.styleClasses === null) {
-        tag.styleClasses = "";
-    }
-    const classes = tag.styleClasses.split(" ")
-        .filter(item => item !== '');
-    classes.push(`.${styleClass}`);
-    tag.styleClasses = classes.join(" ");
-    return tag;
-}
 //#region "private methods."
 export function _detectSimpleTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
     const result = _detectRegEx(source, faTag);

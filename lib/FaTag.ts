@@ -12,10 +12,7 @@ export abstract class FaTagBase {
     constructor(src: string | null, parsed: DetectedSimpleTag | DetectedStackingTag, _kind: FaTagKind) {
         this.kind = _kind;
         this.src = src;
-        this._setParsed(parsed);
     }
-
-    protected abstract _setParsed(parsed: DetectedSimpleTag | DetectedStackingTag): void;
 
     public static detectFaTag(str: string, pos: number, ignoreStyled: boolean): FaTagBase | null {
         // if not start with 0x3A(:) or 0x5B([) then returns null.
@@ -41,10 +38,11 @@ export abstract class FaTagBase {
 }
 
 export class SimpleFaTag extends FaTagBase {
-    public readonly icons: string[] = [];
-    public readonly styles: string[] = [];
+    public icons: string[] = [];
+    public styles: string[] = [];
     constructor(tag: string | null, parsed: DetectedSimpleTag | DetectedStackingTag) {
         super(tag, parsed, "simple");
+        this._setParsed(<DetectedSimpleTag>parsed);
     }
     public get hasStyle(): boolean {
         return this.styles.length !== 0;
@@ -64,13 +62,12 @@ export class SimpleFaTag extends FaTagBase {
         return !this.hasStyle ?
             `:${icons}:` : `[:${icons}:]{${styles}}`;
     }
-    protected _setParsed(parsed: DetectedSimpleTag | DetectedStackingTag): void {
-        const detectedSimpleTag = <DetectedSimpleTag>parsed;
-        this.icons.push(...detectedSimpleTag.faClasses
+    protected _setParsed(parsed: DetectedSimpleTag): void {
+        this.icons.push(...parsed.faClasses
             .split(' ')
             .filter((item) => item !== ''));
-        if (detectedSimpleTag.styleClasses !== null) {
-            this.styles.push(...detectedSimpleTag.styleClasses
+        if (parsed.styleClasses !== null) {
+            this.styles.push(...parsed.styleClasses
                 .split(' ')
                 .filter(item => item != '')
                 .map(styleCalss => styleCalss.replace('.', '')));
@@ -82,6 +79,7 @@ export class StackingFaTag extends FaTagBase {
     public readonly children: SimpleFaTag[] = [];
     constructor(src: string | null, parsed: DetectedSimpleTag | DetectedStackingTag) {
         super(src, parsed, "stacking");
+        this._setParsed(<DetectedStackingTag>parsed);
     }
     public toString() {
         const joinedChildren = this.children
@@ -89,8 +87,7 @@ export class StackingFaTag extends FaTagBase {
             .join(' ');
         return `[${joinedChildren}]`;
     }
-    protected _setParsed(parsed: DetectedSimpleTag | DetectedStackingTag): void {
-        const detectedStackingFaTag = <DetectedStackingTag>parsed;
-        this.children.push(...detectedStackingFaTag.map(item => new SimpleFaTag(null, item)))
+    protected _setParsed(parsed: DetectedStackingTag): void {
+        this.children.push(...parsed.map(item => new SimpleFaTag(null, item)))
     }
 }

@@ -83,7 +83,7 @@ describe("FaTagTokenizer", () => {
 
                 if (result !== null && testItem.expected !== null) {
                     expect(result.constructor.name).toEqual(testItem.expected.className);
-                    expect(result._detectedTag.kind).toEqual(testItem.expected.kind);
+                    expect(result._faTag.kind).toEqual(testItem.expected.kind);
                 } else {
                     expect(result).toBeNull();
                     expect(testItem.expected).toBeNull();
