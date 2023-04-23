@@ -41,20 +41,20 @@ export interface DetectedSimpleTag {
 
 export declare type DetectedStackingTag = DetectedSimpleTag[]
 
-export function detectFaTagPattern(str: string, pos: number, ignoreStyled: boolean): DetectedFaTag | null {
-    // if not start with 0x3A(:) or 0x5B([) then returns null.
-    if (str.charCodeAt(pos) !== 0x3A && str.charCodeAt(pos) !== 0x5B) {
-        return null;
-    }
-    // slice from pos
-    const source = str.slice(pos);
-    // detect!
-    let detected = _detectSimpleTag(source, ignoreStyled);
-    if (detected === null) {
-        detected = _detectStackingTag(source, ignoreStyled);
-    }
-    return detected;
-}
+// export function detectFaTagPattern(str: string, pos: number, ignoreStyled: boolean): DetectedFaTag | null {
+//     // if not start with 0x3A(:) or 0x5B([) then returns null.
+//     if (str.charCodeAt(pos) !== 0x3A && str.charCodeAt(pos) !== 0x5B) {
+//         return null;
+//     }
+//     // slice from pos
+//     const source = str.slice(pos);
+//     // detect!
+//     let detected = _detectSimpleTag(source, ignoreStyled);
+//     if (detected === null) {
+//         detected = _detectStackingTag(source, ignoreStyled);
+//     }
+//     return detected;
+// }
 
 export function tagToString(tag: DetectedSimpleTag): string {
     if (tag.styleClasses !== null) {

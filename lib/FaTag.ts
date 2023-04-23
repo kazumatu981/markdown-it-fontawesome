@@ -6,16 +6,18 @@ import {
     _detectStackingTag,
 } from "./TagDetector";
 
-abstract class FaTagBase {
-    public kind: FaTagKind
-    constructor(parsed: DetectedSimpleTag | DetectedStackingTag, _kind: FaTagKind) {
+export abstract class FaTagBase {
+    public kind: FaTagKind;
+    public src: string | null;
+    constructor(src: string | null, parsed: DetectedSimpleTag | DetectedStackingTag, _kind: FaTagKind) {
         this.kind = _kind;
+        this.src = src;
         this._setParsed(parsed);
     }
 
     protected abstract _setParsed(parsed: DetectedSimpleTag | DetectedStackingTag): void;
 
-    detectFaTag(str: string, pos: number, ignoreStyled: boolean): FaTagBase | null {
+    public static detectFaTag(str: string, pos: number, ignoreStyled: boolean): FaTagBase | null {
         // if not start with 0x3A(:) or 0x5B([) then returns null.
         if (str.charCodeAt(pos) !== 0x3A && str.charCodeAt(pos) !== 0x5B) {
             return null;
@@ -25,12 +27,12 @@ abstract class FaTagBase {
         // detect!
         let detected = _detectSimpleTag(source, ignoreStyled);
         if (detected !== null) {
-            return new SimpleFaTag(detected.parsed)
+            return new SimpleFaTag(detected.tag, detected.parsed)
         }
         else {
             detected = _detectStackingTag(source, ignoreStyled);
             if (detected !== null) {
-                return new StackingFaTag(detected.parsed);
+                return new StackingFaTag(detected.tag, detected.parsed);
             }
         }
         return null;
@@ -38,17 +40,28 @@ abstract class FaTagBase {
 
 }
 
-class SimpleFaTag extends FaTagBase {
+export class SimpleFaTag extends FaTagBase {
     public readonly icons: string[] = [];
     public readonly styles: string[] = [];
-    constructor(parsed: DetectedSimpleTag | DetectedStackingTag) {
-        super(parsed, "simple");
+    constructor(tag: string | null, parsed: DetectedSimpleTag | DetectedStackingTag) {
+        super(tag, parsed, "simple");
+    }
+    public get hasStyle(): boolean {
+        return this.styles.length !== 0;
+    }
+    public getIconsAsString(): string {
+        return `${this.icons.join(' ')}`;
     }
 
+    public getStylesAsString(removeComma: boolean): string {
+        return removeComma ?
+            `${this.styles.join(' ')}` :
+            `${this.styles.map(style => '.' + style).join(' ')}`;
+    }
     public toString(): string {
-        const icons = `${this.icons.join(' ')}`;
-        const styles = `${this.styles.map(style => '.' + style).join(' ')}`
-        return this.styles.length !== 0 ?
+        const icons = this.getIconsAsString();
+        const styles = this.getStylesAsString(false);
+        return !this.hasStyle ?
             `:${icons}:` : `[:${icons}:]{${styles}}`;
     }
     protected _setParsed(parsed: DetectedSimpleTag | DetectedStackingTag): void {
@@ -65,10 +78,10 @@ class SimpleFaTag extends FaTagBase {
     }
 }
 
-class StackingFaTag extends FaTagBase {
+export class StackingFaTag extends FaTagBase {
     public readonly children: SimpleFaTag[] = [];
-    constructor(parsed: DetectedSimpleTag | DetectedStackingTag) {
-        super(parsed, "stacking");
+    constructor(src: string | null, parsed: DetectedSimpleTag | DetectedStackingTag) {
+        super(src, parsed, "stacking");
     }
     public toString() {
         const joinedChildren = this.children
@@ -78,6 +91,6 @@ class StackingFaTag extends FaTagBase {
     }
     protected _setParsed(parsed: DetectedSimpleTag | DetectedStackingTag): void {
         const detectedStackingFaTag = <DetectedStackingTag>parsed;
-        this.children.push(...detectedStackingFaTag.map(item => new SimpleFaTag(item)))
+        this.children.push(...detectedStackingFaTag.map(item => new SimpleFaTag(null, item)))
     }
 }

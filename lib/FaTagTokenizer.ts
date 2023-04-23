@@ -1,15 +1,16 @@
 import StateInline from "markdown-it/lib/rules_inline/state_inline";
 import { FontawesomeOption } from "./FontawesomeOption";
-import { DetectedFaTag, detectFaTagPattern, DetectedSimpleTag, DetectedStackingTag } from "./TagDetector";
+import { DetectedFaTag, DetectedSimpleTag, DetectedStackingTag } from "./TagDetector";
+import { FaTagBase, SimpleFaTag, StackingFaTag } from './FaTag';
 
-export abstract class FaTokenizerBase {
+export abstract class FaTokenizerBase<T extends FaTagBase> {
     _stateInline: StateInline;
     _silent: boolean;
-    _detectedTag: DetectedFaTag
-    constructor(stateInline: StateInline, silent: boolean, detectedTag: DetectedFaTag) {
+    _faTag: T
+    constructor(stateInline: StateInline, silent: boolean, detectedTag: T) {
         this._stateInline = stateInline;
         this._silent = silent;
-        this._detectedTag = detectedTag;
+        this._faTag = detectedTag;
     }
     protected _pushStackingTag(stackingTag: DetectedStackingTag) {
         const stackingIconTag = this._stateInline.push('fa_icon_stacking_open', 'span', 1);
@@ -19,15 +20,15 @@ export abstract class FaTokenizerBase {
         }
         this._stateInline.push('fa_icon_stacking_close', 'span', -1);
     }
-    protected _pushFaTag(fatag: DetectedSimpleTag): void {
-        if (fatag.styleClasses != null) {
+    protected _pushFaTag(fatag: SimpleFaTag): void {
+        if (fatag.hasStyle) {
             const iconTag = this._stateInline.push('fa_icon_style_open', 'span', 1);
-            iconTag.attrPush(['class', fatag.styleClasses.replaceAll('.', '')]);
+            iconTag.attrPush(['class', fatag.getStylesAsString(true)]);
         }
         const iconTag = this._stateInline.push('fa_icon_open', 'i', 1);
-        iconTag.attrPush(['class', fatag.faClasses]);
+        iconTag.attrPush(['class', fatag.getIconsAsString()]);
         this._stateInline.push('fa_icon_close', 'i', -1);
-        if (fatag.styleClasses != null) {
+        if (fatag.hasStyle) {
             this._stateInline.push('fa_icon_style_close', 'span', -1);
         }
     }
@@ -42,11 +43,11 @@ export abstract class FaTokenizerBase {
     public static createTokenizer(
         state: StateInline, silent: boolean, option: FontawesomeOption
     ): FaTokenizerBase | null {
-        const pattern = detectFaTagPattern(state.src, state.pos, option.ignoreStyled ?? false);
+        const faTag = FaTagBase.detectFaTag(state.src, state.pos, option.ignoreStyled ?? false);
         var tokenizer: FaTokenizerBase | null = null;
 
-        if (pattern != null) {
-            switch (pattern.kind) {
+        if (faTag != null) {
+            switch (faTag.kind) {
                 case "simple":
                     tokenizer = new FaTagTokenizer(state, silent, pattern);
                     break;
@@ -59,12 +60,12 @@ export abstract class FaTokenizerBase {
     }
 }
 
-export class FaTagTokenizer extends FaTokenizerBase {
+export class FaTagTokenizer extends FaTokenizerBase<SimpleFaTag> {
     protected _tokenize(): void {
         this._pushFaTag(<DetectedSimpleTag>this._detectedTag.parsed);
     }
 }
-export class StackingTokenizer extends FaTokenizerBase {
+export class StackingTokenizer extends FaTokenizerBase<StackingFaTag> {
     protected _tokenize(): void {
         this._pushStackingTag(<DetectedStackingTag>this._detectedTag.parsed);
     }

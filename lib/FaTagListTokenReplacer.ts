@@ -1,6 +1,6 @@
 import StateBlock from "markdown-it/lib/rules_block/state_block"
 import Token from "markdown-it/lib/token"
-import { detectFaTagPattern, DetectedSimpleTag, addStyleClass, tagToString } from "./TagDetector"
+import { DetectedSimpleTag, addStyleClass, tagToString } from "./TagDetector"
 
 interface TokenRplaceMarker {
     start: number,
