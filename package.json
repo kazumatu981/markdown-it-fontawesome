@@ -2,7 +2,11 @@
   "name": "@kazumatu981/markdown-it-fontawesome",
   "version": "1.0.1",
   "description": "markdown-it plugin to be able to use fontawesome",
-  "main": "./dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "markdown",
     "markdown-it",

@@ -1,7 +1,7 @@
 
 module.exports = {
-    inputDir: './',
-    themeSet: './my-theme.css',
-    engine: ({ marp }) => marp
-        .use(require('../dist/index'))
+        inputDir: './',
+        themeSet: './my-theme.css',
+        engine: ({ marp }) => marp
+                .use(require('../dist'))
 }

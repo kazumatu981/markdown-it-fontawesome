@@ -1,18 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "display": "Node 16",
+  "extends": "@tsconfig/node16/tsconfig.json",
   "compilerOptions": {
-    "lib": [
-      "es2021"
-    ],
     "outDir": "dist",
-    "module": "commonjs",
-    "target": "es2021",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "declaration": true,
     "baseUrl": "./types",
     "paths": {
       "markdown-it/lib/rules_block/*": [
@@ -23,6 +14,7 @@
   "exclude": [
     "node_modules",
     "tests",
-    "demo"
+    "demo",
+    "dist"
   ]
 }
