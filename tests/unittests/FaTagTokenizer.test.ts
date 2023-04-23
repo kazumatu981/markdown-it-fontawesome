@@ -1,7 +1,7 @@
 import { describe } from '@jest/globals';
 import StateInline from 'markdown-it/lib/rules_inline/state_inline';
 import MarkdownIt from 'markdown-it';
-import { createTokenizer, FaTagTokenizer, StackingTokenizer } from '../../lib/FaTagTokenizer';
+import { FaTokenizerBase } from '../../lib/FaTagTokenizer';
 
 function _createStateMock(str: string, pos: number): StateInline {
     const mockClass = new StateInline(str, new MarkdownIt(), null, []);
@@ -30,7 +30,7 @@ describe("FaTagTokenizer", () => {
                 },
                 expected: {
                     className: "FaTagTokenizer",
-                    kind: "styled"
+                    kind: "simple"
                 }
             },
             {
@@ -40,7 +40,7 @@ describe("FaTagTokenizer", () => {
                 },
                 expected: {
                     className: "StackingTokenizer",
-                    kind: "simpleStacking"
+                    kind: "stacking"
                 }
             },
             {
@@ -79,11 +79,11 @@ describe("FaTagTokenizer", () => {
             test(testItem.description, () => {
                 const state = _createStateMock(testItem.test.target, 0);
 
-                const result = createTokenizer(state, false, testItem.test.option);
+                const result = FaTokenizerBase.createTokenizer(state, false, testItem.test.option);
 
                 if (result !== null && testItem.expected !== null) {
                     expect(result.constructor.name).toEqual(testItem.expected.className);
-                    expect(result._detectedTag.kind).toEqual(testItem.expected.kind);
+                    expect(result._faTag.kind).toEqual(testItem.expected.kind);
                 } else {
                     expect(result).toBeNull();
                     expect(testItem.expected).toBeNull();
