@@ -76,7 +76,7 @@ export function addStyleClass(tag: DetectedSimpleTag, styleClass: string): Detec
     return tag;
 }
 //#region "private methods."
-function _detectSimpleTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
+export function _detectSimpleTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
     const result = _detectRegEx(source, faTag);
     if (result !== null) {
         // this is FaTag
@@ -96,7 +96,7 @@ function _detectSimpleTag(source: string, ignoreStyled: boolean): DetectedFaTag 
     }
     return null;
 }
-function _detectStackingTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
+export function _detectStackingTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
     const result = _detectRegEx(source, stackingFaTag);
     if (result !== null) {
         // this is FaTag
