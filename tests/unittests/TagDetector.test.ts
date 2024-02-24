@@ -1,21 +1,19 @@
-import { describe, test, expect } from "@jest/globals";
-import {
-    FaTagRegEx,
-} from "../../lib/TagDetector";
-import { FaTagBase, StackingFaTag } from "../../lib/FaTag";
+import { describe, test, expect } from '@jest/globals';
+import { FaTagRegEx } from '../../lib/TagDetector';
 
 describe('TagDetector', () => {
-
     describe('Regular Expression Test', () => {
         interface RegExpTestExpected {
-            index: number, 0: string
+            index: number;
+            0: string;
         }
         interface RegExpTestItem {
-            test: string, expected: RegExpTestExpected | null
+            test: string;
+            expected: RegExpTestExpected | null;
         }
 
         function RegExpTest(regex: string, testItem: RegExpTestItem) {
-            const regExp = new RegExp(regex, "g");
+            const regExp = new RegExp(regex, 'g');
             const actual = regExp.exec(testItem.test);
             if (actual !== null && testItem.expected !== null) {
                 expect(actual.index).toEqual(testItem.expected.index);
@@ -29,94 +27,93 @@ describe('TagDetector', () => {
         }
         describe('hyphenConnectedAlpha', () => {
             const TEST_DATA = [
-                { test: "aaa", expected: { index: 0, 0: "aaa" } },
-                { test: "a-b", expected: { index: 0, 0: "a-b" } },
-                { test: "a-b-x", expected: { index: 0, 0: "a-b-x" } },
-                { test: "  a-b-x", expected: { index: 2, 0: "a-b-x" } },
-                { test: "1 a-b-x", expected: { index: 0, 0: "1" } },
-                { test: "-a", expected: null },
-                { test: "x-", expected: null },
-                { test: "123", expected: null },
-                { test: "12-s", expected: null }
+                { test: 'aaa', expected: { index: 0, 0: 'aaa' } },
+                { test: 'a-b', expected: { index: 0, 0: 'a-b' } },
+                { test: 'a-b-x', expected: { index: 0, 0: 'a-b-x' } },
+                { test: '  a-b-x', expected: { index: 2, 0: 'a-b-x' } },
+                { test: '1 a-b-x', expected: { index: 0, 0: '1' } },
+                { test: '-a', expected: null },
+                { test: 'x-', expected: null },
+                { test: '123', expected: null },
+                { test: '12-s', expected: null },
             ];
 
             for (const testItem of TEST_DATA) {
                 test(`TestCase: '${testItem.test}'`, () => {
                     RegExpTest(FaTagRegEx.hyphenConnectedAlpha, testItem);
-                })
+                });
             }
         });
         describe('simpleFaTag', () => {
             const TEST_DATA = [
-                { test: ":fa:", expected: null },
-                { test: ":fa :", expected: null },
-                { test: ":fa-test:", expected: { index: 0, 0: ":fa-test:" } },
-                { test: ":fa-test-x:", expected: { index: 0, 0: ":fa-test-x:" } },
-                { test: ":fa-test fa-xxxxx:", expected: { index: 0, 0: ":fa-test fa-xxxxx:" } },
-                { test: ":fa-test fa-xx fa-xx:", expected: { index: 0, 0: ":fa-test fa-xx fa-xx:" } },
-                { test: "  :fa-test:", expected: { index: 2, 0: ":fa-test:" } },
-                { test: ":ga-test:", expected: null },
-                { test: ":fa-test", expected: null }
+                { test: ':fa:', expected: null },
+                { test: ':fa :', expected: null },
+                { test: ':fa-test:', expected: { index: 0, 0: ':fa-test:' } },
+                { test: ':fa-test-x:', expected: { index: 0, 0: ':fa-test-x:' } },
+                { test: ':fa-test fa-xxxxx:', expected: { index: 0, 0: ':fa-test fa-xxxxx:' } },
+                { test: ':fa-test fa-xx fa-xx:', expected: { index: 0, 0: ':fa-test fa-xx fa-xx:' } },
+                { test: '  :fa-test:', expected: { index: 2, 0: ':fa-test:' } },
+                { test: ':ga-test:', expected: null },
+                { test: ':fa-test', expected: null },
             ];
             for (const testItem of TEST_DATA) {
                 test(`TestCase: '${testItem.test}'`, () => {
                     RegExpTest(FaTagRegEx.simpleFaTag, testItem);
-                })
+                });
             }
         });
         describe('styledFaTag', () => {
             const TEST_DATA = [
-                { test: "[:fa-test:]{.red}", expected: { index: 0, 0: "[:fa-test:]{.red}" } },
-                { test: "[:fa-test fa-x:]{.red}", expected: { index: 0, 0: "[:fa-test fa-x:]{.red}" } },
-                { test: "[:fa-test fa-x:]{.red .small}", expected: { index: 0, 0: "[:fa-test fa-x:]{.red .small}" } },
-                { test: "[:fa-test fa-x:]{.red.small}", expected: null },
-                { test: "[:xxx:]{.red}", expected: null },
-                { test: "[:fa-test:] .red}", expected: null },
+                { test: '[:fa-test:]{.red}', expected: { index: 0, 0: '[:fa-test:]{.red}' } },
+                { test: '[:fa-test fa-x:]{.red}', expected: { index: 0, 0: '[:fa-test fa-x:]{.red}' } },
+                { test: '[:fa-test fa-x:]{.red .small}', expected: { index: 0, 0: '[:fa-test fa-x:]{.red .small}' } },
+                { test: '[:fa-test fa-x:]{.red.small}', expected: null },
+                { test: '[:xxx:]{.red}', expected: null },
+                { test: '[:fa-test:] .red}', expected: null },
             ];
             for (const testItem of TEST_DATA) {
                 test(`TestCase: '${testItem.test}'`, () => {
                     RegExpTest(FaTagRegEx.styledFaTag, testItem);
-                })
+                });
             }
         });
         describe('faTag', () => {
             const TEST_DATA = [
-                { test: ":fa :", expected: null },
-                { test: ":fa-test:", expected: { index: 0, 0: ":fa-test:" } },
-                { test: ":fa-test-x:", expected: { index: 0, 0: ":fa-test-x:" } },
-                { test: ":fa-test fa-xxxxx:", expected: { index: 0, 0: ":fa-test fa-xxxxx:" } },
-                { test: ":fa-test fa-xx fa-xx:", expected: { index: 0, 0: ":fa-test fa-xx fa-xx:" } },
-                { test: "[:fa-test:]{.red}", expected: { index: 0, 0: "[:fa-test:]{.red}" } },
-                { test: "[:fa-test fa-x:]{.red}", expected: { index: 0, 0: "[:fa-test fa-x:]{.red}" } },
-                { test: "[:fa-test fa-x:]{.red .small}", expected: { index: 0, 0: "[:fa-test fa-x:]{.red .small}" } },
-                { test: ":ga-test:", expected: null },
-                { test: ":fa-test", expected: null },
-                { test: "[:fa-test fa-x:]{.red.small}", expected: null },
-                { test: "[:xxx:]{.red}", expected: null },
-                { test: "[:fa-test:] .red}", expected: null },
+                { test: ':fa :', expected: null },
+                { test: ':fa-test:', expected: { index: 0, 0: ':fa-test:' } },
+                { test: ':fa-test-x:', expected: { index: 0, 0: ':fa-test-x:' } },
+                { test: ':fa-test fa-xxxxx:', expected: { index: 0, 0: ':fa-test fa-xxxxx:' } },
+                { test: ':fa-test fa-xx fa-xx:', expected: { index: 0, 0: ':fa-test fa-xx fa-xx:' } },
+                { test: '[:fa-test:]{.red}', expected: { index: 0, 0: '[:fa-test:]{.red}' } },
+                { test: '[:fa-test fa-x:]{.red}', expected: { index: 0, 0: '[:fa-test fa-x:]{.red}' } },
+                { test: '[:fa-test fa-x:]{.red .small}', expected: { index: 0, 0: '[:fa-test fa-x:]{.red .small}' } },
+                { test: ':ga-test:', expected: null },
+                { test: ':fa-test', expected: null },
+                { test: '[:fa-test fa-x:]{.red.small}', expected: null },
+                { test: '[:xxx:]{.red}', expected: null },
+                { test: '[:fa-test:] .red}', expected: null },
             ];
             for (const testItem of TEST_DATA) {
                 test(`TestCase: '${testItem.test}'`, () => {
                     RegExpTest(FaTagRegEx.faTag, testItem);
-                })
-            };
+                });
+            }
         });
         describe('stackingFaTag', () => {
             const TEST_DATA = [
-                { test: "[:fa-test::fa-test-x:]", expected: { index: 0, 0: "[:fa-test::fa-test-x:]" } },
-                { test: "[:fa-test: :fa-test-x:]", expected: { index: 0, 0: "[:fa-test: :fa-test-x:]" } },
-                { test: "[:fa-test: [:fa-test:]{.red}]", expected: { index: 0, 0: "[:fa-test: [:fa-test:]{.red}]" } },
-                { test: "[:fa-test: [:fa-test:]{.red]", expected: null },
-                { test: "[:fa-test: [:fa-test:]{.red}", expected: null },
-                { test: "[fa-test: [:fa-test:]{.red}]", expected: null },
+                { test: '[:fa-test::fa-test-x:]', expected: { index: 0, 0: '[:fa-test::fa-test-x:]' } },
+                { test: '[:fa-test: :fa-test-x:]', expected: { index: 0, 0: '[:fa-test: :fa-test-x:]' } },
+                { test: '[:fa-test: [:fa-test:]{.red}]', expected: { index: 0, 0: '[:fa-test: [:fa-test:]{.red}]' } },
+                { test: '[:fa-test: [:fa-test:]{.red]', expected: null },
+                { test: '[:fa-test: [:fa-test:]{.red}', expected: null },
+                { test: '[fa-test: [:fa-test:]{.red}]', expected: null },
             ];
             for (const testItem of TEST_DATA) {
                 test(`TestCase: '${testItem.test}'`, () => {
                     RegExpTest(FaTagRegEx.stackingFaTag, testItem);
-                })
-            };
+                });
+            }
         });
-
     });
 
     // describe.skip('detectFaTagPattern', () => {
@@ -141,4 +138,4 @@ describe('TagDetector', () => {
     //         })
     //     }
     // })
-})
+});

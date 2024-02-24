@@ -1,7 +1,7 @@
 export interface FontawesomeOption {
-    ignoreStyled?: boolean
+    ignoreStyled?: boolean;
 }
 
 export const DefaultOption: FontawesomeOption = {
-    ignoreStyled: false
-}
+    ignoreStyled: false,
+};

@@ -1,11 +1,11 @@
-import StateBlock from "markdown-it/lib/rules_block/state_block"
-import Token from "markdown-it/lib/token"
-import { FaTagBase, SimpleFaTag } from "./FaTag"
+import StateBlock from 'markdown-it/lib/rules_block/state_block';
+import Token from 'markdown-it/lib/token';
+import { FaTagBase, SimpleFaTag } from './FaTag';
 
 interface TokenRplaceMarker {
-    start: number,
-    end: number,
-    listItemContents?: Token[]
+    start: number;
+    end: number;
+    listItemContents?: Token[];
 }
 
 export class FaTagListTokenReplacer {
@@ -20,7 +20,7 @@ export class FaTagListTokenReplacer {
         if (startToken.tag !== 'ul') {
             return false;
         }
-        const allStartWithFaItem = this.contents.every(item => {
+        const allStartWithFaItem = this.contents.every((item) => {
             const detected = FaTagBase.detectFaTag(item.content, 0, false);
             return detected?.kind === 'simple';
         });
@@ -31,9 +31,7 @@ export class FaTagListTokenReplacer {
             return this._marker.listItemContents;
         }
 
-        const contents = this._state.tokens
-            .slice(this._marker.start)
-            .filter(token => token.type === 'inline');
+        const contents = this._state.tokens.slice(this._marker.start).filter((token) => token.type === 'inline');
         this._marker.listItemContents = contents;
         return contents;
     }
@@ -48,11 +46,10 @@ export class FaTagListTokenReplacer {
             startToken.attrPush(['class', className]);
         }
 
-        this.contents.forEach(item => {
+        this.contents.forEach((item) => {
             const faTag = <SimpleFaTag>FaTagBase.detectFaTag(item.content, 0, false);
-            faTag.styles.push("fa-li");
-            item.content = item.content.replace(
-                <string>faTag.src, faTag.toString());
-        })
+            faTag.styles.push('fa-li');
+            item.content = item.content.replace(<string>faTag.src, faTag.toString());
+        });
     }
 }
