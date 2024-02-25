@@ -44,47 +44,37 @@ export declare type DetectedStackingTag = DetectedSimpleTag[];
 //#region "private methods."
 export function _detectSimpleTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
     const result = _detectRegEx(source, faTag);
-    if (result !== null) {
-        // this is FaTag
-        if (result.indexOf('{') > 0) {
-            if (!ignoreStyled) {
-                return {
-                    kind: 'simple',
-                    tag: result,
-                    parsed: _parseFaTag(result),
-                };
-            }
-        } else {
-            return {
-                kind: 'simple',
-                tag: result,
-                parsed: _parseFaTag(result),
-            };
-        }
+    if (result === null) {
+        return null;
     }
-    return null;
+
+    const isStyled = result.indexOf('{') > 0;
+    if (isStyled && ignoreStyled) {
+        return null;
+    }
+
+    return {
+        kind: 'simple',
+        tag: result,
+        parsed: _parseFaTag(result),
+    };
 }
+
 export function _detectStackingTag(source: string, ignoreStyled: boolean): DetectedFaTag | null {
     const result = _detectRegEx(source, stackingFaTag);
-    if (result !== null) {
-        // this is FaTag
-        if (result.indexOf('{') > 0) {
-            if (!ignoreStyled) {
-                return {
-                    kind: 'stacking',
-                    tag: result,
-                    parsed: _parseStackingTag(result),
-                };
-            }
-        } else {
-            return {
-                kind: 'stacking',
-                tag: result,
-                parsed: _parseStackingTag(result),
-            };
-        }
+    if (result === null) {
+        return null;
     }
-    return null;
+
+    const isStyled = result.indexOf('{') > 0;
+    if (isStyled && ignoreStyled) {
+        return null;
+    }
+    return {
+        kind: 'stacking',
+        tag: result,
+        parsed: _parseStackingTag(result),
+    };
 }
 
 function _parseFaTag(tag: string): DetectedSimpleTag {

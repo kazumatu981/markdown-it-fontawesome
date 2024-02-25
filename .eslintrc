@@ -11,5 +11,11 @@
         "sourceType": "module"
     },
     "plugins": ["@typescript-eslint"],
-    "rules": {}
+    "rules": {
+        "complexity": ["error", 10],
+        "max-depth": ["error", 4],
+        "max-lines": ["error", 1000],
+        "max-lines-per-function": ["error", 20],
+        "max-statements-per-line": ["error", { "max": 1 }]
+    }
 }
