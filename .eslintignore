@@ -1,8 +1,0 @@
-.vscode
-coverage
-dist
-img
-
-node_modules
-sandbox
-.*ignore
