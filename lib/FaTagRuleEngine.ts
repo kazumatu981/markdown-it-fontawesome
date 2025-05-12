@@ -1,13 +1,12 @@
-import StateInline from "markdown-it/lib/rules_inline/state_inline";
-import { FontawesomeOption, DefaultOption } from "./FontawesomeOption";
-import { FaTokenizerBase } from "./FaTagTokenizer";
-import { MarkdownItEngineBase } from "./MarkdownItEngineBase";
+import StateInline from 'markdown-it/lib/rules_inline/state_inline';
+import { FontawesomeOption, DefaultOption } from './FontawesomeOption';
+import { FaTokenizerBase } from './FaTagTokenizer';
+import { MarkdownItEngineBase } from './MarkdownItEngineBase';
 
 export class FaTagRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
-
     rule(state: StateInline, silent: boolean): boolean {
-        var detected = false;
-        var tokenizer = FaTokenizerBase.createTokenizer(state, silent, this._option ?? DefaultOption);
+        let detected = false;
+        const tokenizer = FaTokenizerBase.createTokenizer(state, silent, this._option ?? DefaultOption);
         if (tokenizer !== null) {
             detected = true;
             tokenizer.run();
@@ -15,10 +14,8 @@ export class FaTagRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
         return detected;
     }
     use() {
-        this._md.inline.ruler.push(
-            'fontawesome_tag',
-            (state, silent) => {
-                return this.rule(state, silent);
-            });
+        this._md.inline.ruler.push('fontawesome_tag', (state, silent) => {
+            return this.rule(state, silent);
+        });
     }
 }

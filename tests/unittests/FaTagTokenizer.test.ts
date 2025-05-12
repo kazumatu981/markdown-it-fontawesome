@@ -1,78 +1,84 @@
 import { describe } from '@jest/globals';
 import type StateInline from 'markdown-it/lib/rules_inline/state_inline';
-import MarkdownIt from 'markdown-it';
 import { FaTokenizerBase } from '../../lib/FaTagTokenizer';
 
 function _createStateMock(str: string, pos: number): StateInline {
     return {
-        src: str, pos:pos
+        src: str,
+        pos: pos,
     } as StateInline;
 }
 
-
-describe("FaTagTokenizer", () => {
-    describe("createTokenizer()", () => {
+describe('FaTagTokenizer', () => {
+    describe('createTokenizer()', () => {
         const TEST_DATA = [
             {
-                description: "simple tag case.",
+                description: 'simple tag case.',
                 test: {
-                    target: ":fa-camera:", option: { ignoreStyled: false }
+                    target: ':fa-camera:',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "FaTagTokenizer",
-                    kind: "simple"
-                }
+                    className: 'FaTagTokenizer',
+                    kind: 'simple',
+                },
             },
             {
-                description: "styled tag case.",
+                description: 'styled tag case.',
                 test: {
-                    target: "[:fa-camera:]{.red}", option: { ignoreStyled: false }
+                    target: '[:fa-camera:]{.red}',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "FaTagTokenizer",
-                    kind: "simple"
-                }
+                    className: 'FaTagTokenizer',
+                    kind: 'simple',
+                },
             },
             {
-                description: "simpleStaking tag case.",
+                description: 'simpleStaking tag case.',
                 test: {
-                    target: "[:fa-camera: :fa-camera:]", option: { ignoreStyled: false }
+                    target: '[:fa-camera: :fa-camera:]',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "StackingTokenizer",
-                    kind: "stacking"
-                }
+                    className: 'StackingTokenizer',
+                    kind: 'stacking',
+                },
             },
             {
-                description: "stacking tag case with style.",
+                description: 'stacking tag case with style.',
                 test: {
-                    target: "[:fa-camera: [:fa-camera:]{.red}]", option: { ignoreStyled: false }
+                    target: '[:fa-camera: [:fa-camera:]{.red}]',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "StackingTokenizer",
-                    kind: "stacking"
-                }
+                    className: 'StackingTokenizer',
+                    kind: 'stacking',
+                },
             },
             {
-                description: "unexpected",
+                description: 'unexpected',
                 test: {
-                    target: "[:fa-camera: :fa-camera:{.red]", option: { ignoreStyled: false }
+                    target: '[:fa-camera: :fa-camera:{.red]',
+                    option: { ignoreStyled: false },
                 },
-                expected: null
+                expected: null,
             },
             {
-                description: "styled tag case(ignore style).",
+                description: 'styled tag case(ignore style).',
                 test: {
-                    target: "[:fa-camera:]{.red}", option: { ignoreStyled: true }
+                    target: '[:fa-camera:]{.red}',
+                    option: { ignoreStyled: true },
                 },
-                expected: null
+                expected: null,
             },
             {
-                description: "stacking tag case(ignorestyle).",
+                description: 'stacking tag case(ignorestyle).',
                 test: {
-                    target: "[:fa-camera::fa-camera:{.red}]", option: { ignoreStyled: true }
+                    target: '[:fa-camera::fa-camera:{.red}]',
+                    option: { ignoreStyled: true },
                 },
-                expected: null
+                expected: null,
             },
         ];
         for (const testItem of TEST_DATA) {
@@ -88,7 +94,7 @@ describe("FaTagTokenizer", () => {
                     expect(result).toBeNull();
                     expect(testItem.expected).toBeNull();
                 }
-            })
+            });
         }
-    })
-})
+    });
+});

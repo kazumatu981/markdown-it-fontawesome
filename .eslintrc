@@ -1,0 +1,21 @@
+{
+    "root": true,
+    "env": {
+        "es2021": true,
+        "node": true
+    },
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "plugin:prettier/recommended"],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+        "complexity": ["error", 10],
+        "max-depth": ["error", 4],
+        "max-lines": ["error", 1000],
+        "max-lines-per-function": ["error", 20],
+        "max-statements-per-line": ["error", { "max": 1 }]
+    }
+}

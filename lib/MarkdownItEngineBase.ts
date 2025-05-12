@@ -1,4 +1,4 @@
-import MarkdownIt from "markdown-it";
+import MarkdownIt from 'markdown-it';
 
 export abstract class MarkdownItEngineBase<T> {
     _md: MarkdownIt;

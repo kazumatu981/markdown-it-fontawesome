@@ -1,3 +1,3 @@
-const markdownItFontawesome = require("./lib");
+import markdownItFontawesome = require('./lib');
 
 module.exports = markdownItFontawesome;
