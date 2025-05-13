@@ -1,11 +1,12 @@
 import { describe, test, expect } from '@jest/globals';
-import MarkdownIt from 'markdown-it';
-const markdownItFontawesome = require('../../index');
+import {plugin} from '../../lib';
+
+import markdownIt  from 'markdown-it';
 
 describe('fa tag render test', () => {
-    function prepairMarkdownIt(opt: any): MarkdownIt {
-        const md = new MarkdownIt();
-        md.use(markdownItFontawesome, opt);
+    function prepairMarkdownIt(opt: any): any {
+        const md = new markdownIt();
+        md.use(plugin, opt);
         return md;
     }
     test("simple tag. ':fa fa-user:'", () => {

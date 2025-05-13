@@ -1,12 +1,12 @@
 import { describe, test, expect } from '@jest/globals';
-import MarkdownIt from 'markdown-it';
 import { BlockFaTagTest } from './snapshot-testcases';
 
-const markdownItFontawesome = require('../../index');
+import MarkdownIt  from 'markdown-it';
+import {plugin} from '../../lib';
 
 function render(markdown: string): string {
     const md = new MarkdownIt();
-    md.use(markdownItFontawesome);
+    md.use(plugin);
 
     return md.render(markdown);
 }

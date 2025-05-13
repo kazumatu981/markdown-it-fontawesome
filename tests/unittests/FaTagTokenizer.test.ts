@@ -1,6 +1,6 @@
 import { describe } from '@jest/globals';
-import type StateInline from 'markdown-it/lib/rules_inline/state_inline';
 import { FaTokenizerBase } from '../../lib/FaTagTokenizer';
+import { StateInline } from 'markdown-it/index.js';
 
 function _createStateMock(str: string, pos: number): StateInline {
     return {
