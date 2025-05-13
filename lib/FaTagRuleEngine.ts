@@ -1,4 +1,4 @@
-import StateInline from 'markdown-it/lib/rules_inline/state_inline';
+import type {StateInline} from 'markdown-it';
 import { FontawesomeOption, DefaultOption } from './FontawesomeOption';
 import { FaTokenizerBase } from './FaTagTokenizer';
 import { MarkdownItEngineBase } from './MarkdownItEngineBase';

@@ -1,11 +1,15 @@
-import MarkdownIt from 'markdown-it';
+import type MarkdownIt from 'markdown-it';
+import { type PluginWithOptions } from 'markdown-it';
 import { FaTagRuleEngine } from './FaTagRuleEngine';
 import { FaTagListRuleEngine } from './FaTagListRuleEngine';
-import { FontawesomeOption } from './FontawesomeOption';
+import { type FontawesomeOption } from './FontawesomeOption';
 
-function markdownItFontawesome(md: MarkdownIt, opt?: FontawesomeOption): void {
+export const plugin: PluginWithOptions<FontawesomeOption> = (
+    md: MarkdownIt,
+    opt?: FontawesomeOption,
+) => {
     new FaTagRuleEngine(md, opt).use();
     new FaTagListRuleEngine(md, opt).use();
-}
+};
 
-export = markdownItFontawesome;
+export * from './FontawesomeOption';
