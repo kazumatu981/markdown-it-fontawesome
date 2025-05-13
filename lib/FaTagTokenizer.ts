@@ -1,4 +1,4 @@
-import StateInline from 'markdown-it/lib/rules_inline/state_inline';
+import type { StateInline} from 'markdown-it';
 import { FontawesomeOption } from './FontawesomeOption';
 import { FaTagBase, SimpleFaTag, StackingFaTag } from './FaTag';
 

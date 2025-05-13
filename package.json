@@ -2,8 +2,15 @@
     "name": "@kazumatu981/markdown-it-fontawesome",
     "version": "1.0.4",
     "description": "markdown-it plugin to be able to use fontawesome",
-    "main": "dist/lib/index.js",
-    "types": "dist/lib/index.d.ts",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/esm/index.d.ts",
+    "exports":{
+        ".":{
+            "import":"./dist/esm/index.js",
+            "require":"./dist/cjs/index.js"
+        }      
+    },
     "keywords": [
         "markdown",
         "markdown-it",
@@ -19,11 +26,12 @@
         "test-v": "jest --verbose",
         "watch": "tsc -w",
         "lint": "eslint .",
-        "build": "tsc",
-        "clean": "tsc -b --clean",
-        "predemo": "npm run build",
+        "build": "npm run build:cjs && npm run build:esm",
+        "build:cjs": "tsc -p tsconfig.cjs.json",
+        "build:esm": "tsc -p tsconfig.esm.json",
         "demo": "marp -s -c demo/marp.config.cjs",
-        "prepublish": "npm run build"
+        "prepublish": "npm run build",
+        "prepack": "npm run build"
     },
     "files": [
         "dist"
@@ -32,20 +40,18 @@
     "license": "MIT",
     "devDependencies": {
         "@jest/globals": "^29.5.0",
-        "@marp-team/marp-cli": "^2.4.0",
-        "@tsconfig/node16": "^1.0.3",
-        "@types/jest": "^29.5.0",
-        "@types/markdown-it": "^13.0.7",
-        "@types/node": "^18.15.10",
-        "eslint": "^8.57.0",
+        "@marp-team/marp-cli": "^4.1.2",
+        "@types/jest": "^29.5.14",
+        "@types/markdown-it": "^14.1.2",
+        "@types/node": "^22.15.17",
+        "eslint": "^9.26.0",
         "eslint-plugin-jsdoc": "^50.6.14",
         "globals": "^16.1.0",
         "jest": "^29.5.0",
-        "markdown-it-attrs": "^4.1.6",
+        "markdown-it": "^14.1.0",
         "markdown-it-bracketed-spans": "^1.0.1",
-        "prettier": "^3.2.5",
         "ts-jest": "^29.1.0",
-        "typescript": "^5.0.2",
-        "typescript-eslint": "^8.18.2"
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.32.1"
     }
 }

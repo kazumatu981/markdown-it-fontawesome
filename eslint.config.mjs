@@ -124,7 +124,7 @@ const srcConfig = tseslint.config({
 
 export default [
     {
-        ignores: ['node_modules/**', 'dist/**', 'coverage/**', 'type-doc/**'],
+        ignores: ['node_modules/**', 'dist/**', 'coverage/**', 'demo/**'],
     },
     jsdoc.configs['flat/recommended'],
     ...srcConfig,

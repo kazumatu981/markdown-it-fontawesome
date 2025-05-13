@@ -1,5 +1,4 @@
-import StateBlock from 'markdown-it/lib/rules_block/state_block';
-import Token from 'markdown-it/lib/token';
+import type {StateBlock, Token} from 'markdown-it';
 import { FaTagBase, SimpleFaTag } from './FaTag';
 
 interface TokenRplaceMarker {

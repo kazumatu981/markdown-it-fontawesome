@@ -1,5 +1,4 @@
-import type StateBlock from 'markdown-it/lib/rules_block/state_block';
-import type ParserBlock from 'markdown-it/lib/parser_block';
+import type  {StateBlock, ParserBlock} from 'markdown-it';
 import { MarkdownItEngineBase } from './MarkdownItEngineBase';
 import { FaTagListTokenReplacer } from './FaTagListTokenReplacer';
 import { FontawesomeOption } from './FontawesomeOption';
