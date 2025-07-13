@@ -1,6 +1,6 @@
 {
     "name": "@kazumatu981/markdown-it-fontawesome",
-    "version": "1.0.4",
+    "version": "2.0.0",
     "description": "markdown-it plugin to be able to use fontawesome",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
