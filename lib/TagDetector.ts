@@ -28,20 +28,22 @@ export interface DetectedTag {
     /** tag string */
     tag: string;
     /** parsed object */
-    parsed: DetectedFaTag | DetectedStackingTag;
+    parsed: ParsedTag;
 }
+
+export type ParsedTag = ParsedFaTag | ParsedStackingTag
 
 /**
  * The kinds of Fontawesome tags
  */
 export type FaTagKind = 'fa' | 'stacking-fa';
 
-export interface DetectedFaTag {
+export interface ParsedFaTag {
     faClasses: string;
     styleClasses: string | null;
 }
 
-export type DetectedStackingTag = DetectedFaTag[];
+export type ParsedStackingTag = ParsedFaTag[];
 
 export class TagDetector{
     private readonly _options?: TagDetectorOptions;
@@ -107,7 +109,7 @@ export class TagDetector{
         };
     }
 
-    private _parseFaTag(tag: string): DetectedFaTag {
+    private _parseFaTag(tag: string): ParsedFaTag {
         // read fa classes
         const faFound = <RegExpExecArray>new RegExp(FA_CLASSES_TAG_PATTERN, 'g').exec(tag);
         // read style classes
@@ -118,8 +120,8 @@ export class TagDetector{
         };
     }
 
-    private _parseStackingTag(tag: string): DetectedStackingTag {
-        const found: DetectedStackingTag = [];
+    private _parseStackingTag(tag: string): ParsedStackingTag {
+        const found: ParsedStackingTag = [];
         const regex = new RegExp(this.faTagPattern, 'g');
         let fatag: RegExpExecArray | null;
         while ((fatag = regex.exec(tag)) !== null) {
