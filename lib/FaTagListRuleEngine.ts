@@ -2,6 +2,7 @@ import type  {StateBlock, ParserBlock} from 'markdown-it';
 import { MarkdownItEngineBase } from './MarkdownItEngineBase';
 import { FaTagListTokenReplacer } from './FaTagListTokenReplacer';
 import { FontawesomeOption } from './FontawesomeOption';
+import { TagDetectorOptions } from './TagDetector';
 
 export class FaTagListRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
     defaultListRule?: ParserBlock.RuleBlock | null;
@@ -14,7 +15,8 @@ export class FaTagListRuleEngine extends MarkdownItEngineBase<FontawesomeOption>
         if (ret) {
             const newTokenEnd = state.tokens.length - 1;
             if (!silent) {
-                const replacer = new FaTagListTokenReplacer(state, { start: newTokenStart, end: newTokenEnd });
+                const replacer = new FaTagListTokenReplacer(
+                    state, { start: newTokenStart, end: newTokenEnd }, this._option as TagDetectorOptions);
                 replacer.replace();
             }
         }

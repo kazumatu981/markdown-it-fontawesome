@@ -46,15 +46,15 @@ export abstract class FaTokenizerBase<T extends FaTagBase> {
         silent: boolean,
         option: FontawesomeOption,
     ): FaTokenizerBase<SimpleFaTag | StackingFaTag> | null {
-        const faTag = FaTagBase.detectFaTag(state.src, state.pos, option.ignoreStyled ?? false);
+        const faTag = FaTagBase.detectFaTag(state.src, state.pos, option);
         let tokenizer: FaTokenizerBase<SimpleFaTag | StackingFaTag> | null = null;
 
         if (faTag != null) {
             switch (faTag.kind) {
-                case 'simple':
+                case 'fa':
                     tokenizer = new FaTagTokenizer(state, silent, <SimpleFaTag>faTag);
                     break;
-                case 'stacking':
+                case 'stacking-fa':
                     tokenizer = new StackingTokenizer(state, silent, <StackingFaTag>faTag);
                     break;
             }

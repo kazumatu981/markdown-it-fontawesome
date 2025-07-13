@@ -20,7 +20,7 @@ describe('FaTagTokenizer', () => {
                 },
                 expected: {
                     className: 'FaTagTokenizer',
-                    kind: 'simple',
+                    kind: 'fa',
                 },
             },
             {
@@ -31,7 +31,7 @@ describe('FaTagTokenizer', () => {
                 },
                 expected: {
                     className: 'FaTagTokenizer',
-                    kind: 'simple',
+                    kind: 'fa',
                 },
             },
             {
@@ -42,7 +42,7 @@ describe('FaTagTokenizer', () => {
                 },
                 expected: {
                     className: 'StackingTokenizer',
-                    kind: 'stacking',
+                    kind: 'stacking-fa',
                 },
             },
             {
@@ -53,7 +53,7 @@ describe('FaTagTokenizer', () => {
                 },
                 expected: {
                     className: 'StackingTokenizer',
-                    kind: 'stacking',
+                    kind: 'stacking-fa',
                 },
             },
             {
