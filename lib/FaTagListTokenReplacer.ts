@@ -1,6 +1,6 @@
-import type {StateBlock, Token} from 'markdown-it';
+import type { StateBlock, Token } from 'markdown-it';
 import { FaTagBase, SimpleFaTag } from './FaTag';
-import { type TagDetectorOptions } from './TagDetector';
+import { TagDetector } from './TagDetector';
 
 interface TokenRplaceMarker {
     start: number;
@@ -11,11 +11,11 @@ interface TokenRplaceMarker {
 export class FaTagListTokenReplacer {
     _state: StateBlock;
     _marker: TokenRplaceMarker;
-    _options: TagDetectorOptions;
-    constructor(state: StateBlock, marker: TokenRplaceMarker, options: TagDetectorOptions) {
+    _detector: TagDetector;
+    constructor(state: StateBlock, marker: TokenRplaceMarker, detector: TagDetector) {
         this._state = state;
         this._marker = marker;
-        this._options = options
+        this._detector = detector;
     }
     get isFaTagList(): boolean {
         const startToken = this._state.tokens[this._marker.start];
@@ -23,7 +23,7 @@ export class FaTagListTokenReplacer {
             return false;
         }
         const allStartWithFaItem = this.contents.every((item) => {
-            const detected = FaTagBase.detectFaTag(item.content, 0, this._options);
+            const detected = FaTagBase.detectFaTag(item.content, 0, this._detector);
             return detected?.kind === 'fa';
         });
         return allStartWithFaItem;
@@ -49,7 +49,7 @@ export class FaTagListTokenReplacer {
         }
 
         this.contents.forEach((item) => {
-            const faTag = <SimpleFaTag>FaTagBase.detectFaTag(item.content, 0, this._options);
+            const faTag = <SimpleFaTag>FaTagBase.detectFaTag(item.content, 0, this._detector);
             faTag.styles.push('fa-li');
             item.content = item.content.replace(<string>faTag.src, faTag.toString());
         });

@@ -10,7 +10,6 @@ const DEFAULT_SIMPLE_FA_TAG_END = ':';
 const DEFAULT_STACKING_FA_TAG_START = '[';
 const DEFAULT_STACKING_FA_TAG_END = ']';
 
-
 export interface TagDetectorOptions {
     ignoreStyled?: boolean;
     simpleFaTagStart?: string;
@@ -31,7 +30,7 @@ export interface DetectedTag {
     parsed: ParsedTag;
 }
 
-export type ParsedTag = ParsedFaTag | ParsedStackingTag
+export type ParsedTag = ParsedFaTag | ParsedStackingTag;
 
 /**
  * The kinds of Fontawesome tags
@@ -45,35 +44,41 @@ export interface ParsedFaTag {
 
 export type ParsedStackingTag = ParsedFaTag[];
 
-export class TagDetector{
+export class TagDetector {
     private readonly _options?: TagDetectorOptions;
     constructor(options?: TagDetectorOptions) {
         this._options = options;
     }
 
+    public get simpleFaTagStart(): string {
+        return this._options?.simpleFaTagStart ?? DEFAULT_SIMPLE_FA_TAG_START;
+    }
+    public get simpleFaTagEnd(): string {
+        return this._options?.simpleFaTagEnd ?? DEFAULT_SIMPLE_FA_TAG_END;
+    }
+    public get stackingFaTagStart(): string {
+        return this._options?.stackingFaTagStart ?? DEFAULT_STACKING_FA_TAG_START;
+    }
+    public get stackingFaTagEnd(): string {
+        return this._options?.stackingFaTagEnd ?? DEFAULT_STACKING_FA_TAG_END;
+    }
+
+    public mustBeAFaTag(str: string) {
+        return str.startsWith(this.simpleFaTagStart) || str.startsWith(this.stackingFaTagStart);
+    }
 
     private get simpleFaTagPattern() {
-        return `${
-            this._options?.simpleFaTagStart??DEFAULT_SIMPLE_FA_TAG_START
-        }${
-            FA_CLASSES_TAG_PATTERN
-        }${
-            this._options?.simpleFaTagEnd??DEFAULT_SIMPLE_FA_TAG_END
-        }`
+        return `${this.simpleFaTagStart}${FA_CLASSES_TAG_PATTERN}${this.simpleFaTagEnd}`;
     }
-    private get styledFaTagPattern(){
+    private get styledFaTagPattern() {
         return `\\[ *${this.simpleFaTagPattern} *\\]\\{ *${STYLE_CLASSES_TAG_PATTERN} *\\}`;
     }
-    protected get faTagPattern(){
-        return  `((${this.simpleFaTagPattern})|(${this.styledFaTagPattern}))`;
+    protected get faTagPattern() {
+        return `((${this.simpleFaTagPattern})|(${this.styledFaTagPattern}))`;
     }
-    protected get stackingFaTagPattern(){
-        return `\\${
-            this._options?.stackingFaTagStart??DEFAULT_STACKING_FA_TAG_START
-        }( *${this.faTagPattern}){2,} *\\${
-            this._options?.stackingFaTagEnd??DEFAULT_STACKING_FA_TAG_END
-        }`;  
-    } 
+    protected get stackingFaTagPattern() {
+        return `\\${this.stackingFaTagStart}( *${this.faTagPattern}){2,} *\\${this.stackingFaTagEnd}`;
+    }
 
     public detectFaTag(source: string): DetectedTag | null {
         const result = this._detectRegEx(source, this.faTagPattern);
@@ -82,7 +87,7 @@ export class TagDetector{
         }
 
         const isStyled = result.indexOf('{') > 0;
-        if (isStyled && (this._options?.ignoreStyled??false)) {
+        if (isStyled && (this._options?.ignoreStyled ?? false)) {
             return null;
         }
 
@@ -99,7 +104,7 @@ export class TagDetector{
         }
 
         const isStyled = result.indexOf('{') > 0;
-        if (isStyled && (this._options?.ignoreStyled??false)) {
+        if (isStyled && (this._options?.ignoreStyled ?? false)) {
             return null;
         }
         return {
@@ -134,5 +139,4 @@ export class TagDetector{
         const detected = new RegExp(pattern, 'g').exec(source);
         return detected?.index === 0 ? detected[0] : null;
     }
-
 }

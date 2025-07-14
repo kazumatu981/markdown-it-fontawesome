@@ -1,10 +1,8 @@
-import type  {StateBlock, ParserBlock} from 'markdown-it';
-import { MarkdownItEngineBase } from './MarkdownItEngineBase';
+import type { StateBlock, ParserBlock } from 'markdown-it';
 import { FaTagListTokenReplacer } from './FaTagListTokenReplacer';
-import { FontawesomeOption } from './FontawesomeOption';
-import { TagDetectorOptions } from './TagDetector';
+import { FaTagRuleEngineBase } from './FaTagRuleEngineBase';
 
-export class FaTagListRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
+export class FaTagListRuleEngine extends FaTagRuleEngineBase {
     defaultListRule?: ParserBlock.RuleBlock | null;
     jack(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
         const newTokenStart = state.tokens.length;
@@ -16,7 +14,10 @@ export class FaTagListRuleEngine extends MarkdownItEngineBase<FontawesomeOption>
             const newTokenEnd = state.tokens.length - 1;
             if (!silent) {
                 const replacer = new FaTagListTokenReplacer(
-                    state, { start: newTokenStart, end: newTokenEnd }, this._option as TagDetectorOptions);
+                    state,
+                    { start: newTokenStart, end: newTokenEnd },
+                    this._detector,
+                );
                 replacer.replace();
             }
         }
