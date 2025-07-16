@@ -42,7 +42,7 @@ describe('FaTagTokenizer', () => {
                     option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: 'StackingTokenizer',
+                    className: 'StackingFaTagTokenizer',
                     kind: 'stacking-fa',
                 },
             },
@@ -53,7 +53,7 @@ describe('FaTagTokenizer', () => {
                     option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: 'StackingTokenizer',
+                    className: 'StackingFaTagTokenizer',
                     kind: 'stacking-fa',
                 },
             },
@@ -108,7 +108,7 @@ describe('FaTagTokenizer', () => {
                     },
                 },
                 expected: {
-                    className: 'StackingTokenizer',
+                    className: 'StackingFaTagTokenizer',
                     kind: 'stacking-fa',
                 },
             },
@@ -122,7 +122,7 @@ describe('FaTagTokenizer', () => {
 
                 if (result !== null && testItem.expected !== null) {
                     expect(result.constructor.name).toEqual(testItem.expected?.className);
-                    expect(result._faTag.kind).toEqual(testItem.expected?.kind);
+                    expect(result['_faTag'].kind).toEqual(testItem.expected?.kind);
                 } else {
                     expect(result).toBeNull();
                     expect(testItem.expected).toBeNull();
