@@ -98,7 +98,7 @@ describe('FaTagTokenizer', () => {
             {
                 description: 'Can custom stacking start and end',
                 test: {
-                    target: '|%fa-camera% %fa-camera%|',
+                    target: '|%fa fa-camera% %fa fa-camera%|',
                     option: {
                         ignoreStyled: false,
                         simpleFaTagStart: '%',

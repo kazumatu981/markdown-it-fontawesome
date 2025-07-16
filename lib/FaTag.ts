@@ -17,13 +17,13 @@ export abstract class FaTagBase {
             return null;
         }
         // detect!
-        let detected = detector.detectFaTag(source);
+        let detected = detector.detectStackingTag(source);
         if (detected !== null) {
-            return new SimpleFaTag(detected.parsed, detected.tag);
+            return new StackingFaTag(detected.parsed, detected.tag);
         } else {
-            detected = detector.detectStackingTag(source);
+            detected = detector.detectFaTag(source);
             if (detected !== null) {
-                return new StackingFaTag(detected.parsed, detected.tag);
+                return new SimpleFaTag(detected.parsed, detected.tag);
             }
         }
         return null;

@@ -68,7 +68,7 @@ export class TagDetector {
     }
 
     private get simpleFaTagPattern() {
-        return `${this.simpleFaTagStart}${FA_CLASSES_TAG_PATTERN}${this.simpleFaTagEnd}`;
+        return `\\${this.simpleFaTagStart}${FA_CLASSES_TAG_PATTERN}\\${this.simpleFaTagEnd}`;
     }
     private get styledFaTagPattern() {
         return `\\[ *${this.simpleFaTagPattern} *\\]\\{ *${STYLE_CLASSES_TAG_PATTERN} *\\}`;
