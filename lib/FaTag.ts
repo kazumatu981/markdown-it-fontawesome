@@ -1,11 +1,4 @@
-import {
-    type FaTagKind,
-    type TagDetectorOptions,
-    type ParsedTag,
-    type ParsedFaTag,
-    type ParsedStackingTag,
-    TagDetector,
-} from './TagDetector';
+import { type FaTagKind, type ParsedTag, type ParsedFaTag, type ParsedStackingTag, TagDetector } from './TagDetector';
 
 export abstract class FaTagBase {
     public readonly kind: FaTagKind;
@@ -17,22 +10,20 @@ export abstract class FaTagBase {
         this.src = tag;
     }
 
-    public static detectFaTag(str: string, pos: number, options?: TagDetectorOptions): FaTagBase | null {
-        // if not start with 0x3A(:) or 0x5B([) then returns null.
-        if (str.charCodeAt(pos) !== 0x3a && str.charCodeAt(pos) !== 0x5b) {
-            return null;
-        }
+    public static detectFaTag(str: string, pos: number, detector: TagDetector): FaTagBase | null {
         // slice from pos
         const source = str.slice(pos);
-        const detector = new TagDetector(options);
+        if (!detector.mustBeAFaTag(source)) {
+            return null;
+        }
         // detect!
-        let detected = detector.detectFaTag(source);
+        let detected = detector.detectStackingTag(source);
         if (detected !== null) {
-            return new SimpleFaTag(detected.parsed, detected.tag);
+            return new StackingFaTag(detected.parsed, detected.tag);
         } else {
-            detected = detector.detectStackingTag(source);
+            detected = detector.detectFaTag(source);
             if (detected !== null) {
-                return new StackingFaTag(detected.parsed, detected.tag);
+                return new SimpleFaTag(detected.parsed, detected.tag);
             }
         }
         return null;

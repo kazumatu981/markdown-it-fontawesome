@@ -1,12 +1,11 @@
-import type {StateInline} from 'markdown-it';
-import { FontawesomeOption, DefaultOption } from './FontawesomeOption';
+import type { StateInline } from 'markdown-it';
 import { FaTokenizerBase } from './FaTagTokenizer';
-import { MarkdownItEngineBase } from './MarkdownItEngineBase';
+import { FaTagRuleEngineBase } from './FaTagRuleEngineBase';
 
-export class FaTagRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
+export class FaTagRuleEngine extends FaTagRuleEngineBase {
     rule(state: StateInline, silent: boolean): boolean {
         let detected = false;
-        const tokenizer = FaTokenizerBase.createTokenizer(state, silent, this._option ?? DefaultOption);
+        const tokenizer = FaTokenizerBase.createTokenizer(state, silent, this._detector);
         if (tokenizer !== null) {
             detected = true;
             tokenizer.run();

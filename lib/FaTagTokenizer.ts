@@ -1,5 +1,5 @@
-import type { StateInline} from 'markdown-it';
-import { FontawesomeOption } from './FontawesomeOption';
+import type { StateInline } from 'markdown-it';
+import { TagDetector } from './TagDetector';
 import { FaTagBase, SimpleFaTag, StackingFaTag } from './FaTag';
 
 export abstract class FaTokenizerBase<T extends FaTagBase> {
@@ -44,9 +44,9 @@ export abstract class FaTokenizerBase<T extends FaTagBase> {
     public static createTokenizer(
         state: StateInline,
         silent: boolean,
-        option: FontawesomeOption,
+        detector: TagDetector,
     ): FaTokenizerBase<SimpleFaTag | StackingFaTag> | null {
-        const faTag = FaTagBase.detectFaTag(state.src, state.pos, option);
+        const faTag = FaTagBase.detectFaTag(state.src, state.pos, detector);
         let tokenizer: FaTokenizerBase<SimpleFaTag | StackingFaTag> | null = null;
 
         if (faTag != null) {
