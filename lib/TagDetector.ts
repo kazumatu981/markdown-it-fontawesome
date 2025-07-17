@@ -33,9 +33,11 @@ export interface DetectedTag {
     /** kind of tag single or stacking */
     kind: FaTagKind;
     /** tag string */
-    tag: string;
+    src?: string;
     /** parsed object */
     parsed: ParsedTag;
+    /** detector used to detect this tag */
+    detector: TagDetector;
 }
 
 /**
@@ -142,8 +144,9 @@ export class TagDetector {
 
         return {
             kind: 'fa',
-            tag: result,
+            src: result,
             parsed: this._parseFaTag(result),
+            detector: this,
         };
     }
     /**
@@ -163,8 +166,9 @@ export class TagDetector {
         }
         return {
             kind: 'stacking-fa',
-            tag: result,
+            src: result,
             parsed: this._parseStackingTag(result),
+            detector: this,
         };
     }
     // #endregion
