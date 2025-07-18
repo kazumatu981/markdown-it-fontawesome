@@ -1,40 +1,54 @@
-import type StateBlock from "markdown-it/lib/rules_block/state_block"
-import type ParserBlock from "markdown-it/lib/parser_block";
-import { MarkdownItEngineBase } from "./MarkdownItEngineBase";
-import { FaTagListTokenReplacer } from "./FaTagListTokenReplacer";
-import { FontawesomeOption } from "./FontawesomeOption";
+import type { StateBlock, ParserBlock } from 'markdown-it';
+import { FaTagListTokenReplacer } from './FaTagListTokenReplacer';
+import { FaTagRuleEngineBase } from './FaTagRuleEngineBase';
 
-export class FaTagListRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
+/**
+ * Rule engine for handling FontAwesome tags in lists.
+ * It extends the FaTagRuleEngineBase class and provides a method to use the default list
+ */
+export class FaTagListRuleEngine extends FaTagRuleEngineBase {
     defaultListRule?: ParserBlock.RuleBlock | null;
-    jack(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
+
+    /**
+     * Initializes the rule engine and sets up the list rule.
+     * This method is called to register the list rule with the markdown-it parser.
+     * @returns The instance of the FaTagListRuleEngine for method chaining.
+     */
+    public use(): this {
+        this.defaultListRule = this._getDefaultListRule();
+        this._md.block.ruler.at(
+            'list',
+            (state: StateBlock, startLine: number, endLine: number, silent: boolean) => {
+                return this._jack(state, startLine, endLine, silent);
+            },
+            { alt: ['paragraph', 'reference', 'blockquote'] },
+        );
+        return this;
+    }
+
+    private _jack(state: StateBlock, startLine: number, endLine: number, silent: boolean): boolean {
         const newTokenStart = state.tokens.length;
         let ret = false;
-        if(this.defaultListRule){
+        if (this.defaultListRule) {
             ret = this.defaultListRule(state, startLine, endLine, silent);
         }
         if (ret) {
             const newTokenEnd = state.tokens.length - 1;
             if (!silent) {
-                const replacer = new FaTagListTokenReplacer(state, { start: newTokenStart, end: newTokenEnd });
+                const replacer = new FaTagListTokenReplacer(
+                    state,
+                    { start: newTokenStart, end: newTokenEnd },
+                    this._detector,
+                );
                 replacer.replace();
             }
         }
         return ret;
     }
 
-    use() {
-        this.defaultListRule = this._getDefaultListRule();
-        this._md.block.ruler.at(
-            'list',
-            (state: StateBlock, startLine: number, endLine: number, silent: boolean) => {
-                return this.jack(state, startLine, endLine, silent);
-            },
-            { alt: ['paragraph', 'reference', 'blockquote'] });
-    }
-
-    _getDefaultListRule(): (ParserBlock.RuleBlock | null) {
-        for(const rule of this._md.block.ruler.getRules('')) {
-            if(rule.name === 'list') {
+    private _getDefaultListRule(): ParserBlock.RuleBlock | null {
+        for (const rule of this._md.block.ruler.getRules('')) {
+            if (rule.name === 'list') {
                 return rule;
             }
         }

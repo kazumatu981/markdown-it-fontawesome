@@ -1,94 +1,133 @@
 import { describe } from '@jest/globals';
-import type StateInline from 'markdown-it/lib/rules_inline/state_inline';
-import MarkdownIt from 'markdown-it';
 import { FaTokenizerBase } from '../../lib/FaTagTokenizer';
+import { TagDetector } from '../../lib/TagDetector';
+import { StateInline } from 'markdown-it/index.js';
 
 function _createStateMock(str: string, pos: number): StateInline {
     return {
-        src: str, pos:pos
+        src: str,
+        pos: pos,
     } as StateInline;
 }
 
-
-describe("FaTagTokenizer", () => {
-    describe("createTokenizer()", () => {
+describe('FaTagTokenizer', () => {
+    describe('createTokenizer()', () => {
         const TEST_DATA = [
             {
-                description: "simple tag case.",
+                description: 'simple tag case.',
                 test: {
-                    target: ":fa-camera:", option: { ignoreStyled: false }
+                    target: ':fa-camera:',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "FaTagTokenizer",
-                    kind: "simple"
-                }
+                    className: 'FaTagTokenizer',
+                    kind: 'fa',
+                },
             },
             {
-                description: "styled tag case.",
+                description: 'styled tag case.',
                 test: {
-                    target: "[:fa-camera:]{.red}", option: { ignoreStyled: false }
+                    target: '[:fa-camera:]{.red}',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "FaTagTokenizer",
-                    kind: "simple"
-                }
+                    className: 'FaTagTokenizer',
+                    kind: 'fa',
+                },
             },
             {
-                description: "simpleStaking tag case.",
+                description: 'simpleStaking tag case.',
                 test: {
-                    target: "[:fa-camera: :fa-camera:]", option: { ignoreStyled: false }
+                    target: '[:fa-camera: :fa-camera:]',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "StackingTokenizer",
-                    kind: "stacking"
-                }
+                    className: 'StackingFaTagTokenizer',
+                    kind: 'stacking-fa',
+                },
             },
             {
-                description: "stacking tag case with style.",
+                description: 'stacking tag case with style.',
                 test: {
-                    target: "[:fa-camera: [:fa-camera:]{.red}]", option: { ignoreStyled: false }
+                    target: '[:fa-camera: [:fa-camera:]{.red}]',
+                    option: { ignoreStyled: false },
                 },
                 expected: {
-                    className: "StackingTokenizer",
-                    kind: "stacking"
-                }
+                    className: 'StackingFaTagTokenizer',
+                    kind: 'stacking-fa',
+                },
             },
             {
-                description: "unexpected",
+                description: 'unexpected',
                 test: {
-                    target: "[:fa-camera: :fa-camera:{.red]", option: { ignoreStyled: false }
+                    target: '[:fa-camera: :fa-camera:{.red]',
+                    option: { ignoreStyled: false },
                 },
-                expected: null
+                expected: null,
             },
             {
-                description: "styled tag case(ignore style).",
+                description: 'styled tag case(ignore style).',
                 test: {
-                    target: "[:fa-camera:]{.red}", option: { ignoreStyled: true }
+                    target: '[:fa-camera:]{.red}',
+                    option: { ignoreStyled: true },
                 },
-                expected: null
+                expected: null,
             },
             {
-                description: "stacking tag case(ignorestyle).",
+                description: 'stacking tag case(ignorestyle).',
                 test: {
-                    target: "[:fa-camera::fa-camera:{.red}]", option: { ignoreStyled: true }
+                    target: '[:fa-camera::fa-camera:{.red}]',
+                    option: { ignoreStyled: true },
                 },
-                expected: null
+                expected: null,
+            },
+            {
+                description: 'Can custom fa start and end',
+                test: {
+                    target: '%fa-camera%',
+                    option: {
+                        simpleFaTagStart: '%',
+                        simpleFaTagEnd: '%',
+                    },
+                },
+                expected: {
+                    className: 'FaTagTokenizer',
+                    kind: 'fa',
+                },
+            },
+            {
+                description: 'Can custom stacking start and end',
+                test: {
+                    target: '|%fa fa-camera% %fa fa-camera%|',
+                    option: {
+                        ignoreStyled: false,
+                        simpleFaTagStart: '%',
+                        simpleFaTagEnd: '%',
+                        stackingFaTagStart: '|',
+                        stackingFaTagEnd: '|',
+                    },
+                },
+                expected: {
+                    className: 'StackingFaTagTokenizer',
+                    kind: 'stacking-fa',
+                },
             },
         ];
         for (const testItem of TEST_DATA) {
             test(testItem.description, () => {
                 const state = _createStateMock(testItem.test.target, 0);
+                const detector = new TagDetector(testItem.test.option);
 
-                const result = FaTokenizerBase.createTokenizer(state, false, testItem.test.option);
+                const result = FaTokenizerBase.createTokenizer(state, false, detector);
 
                 if (result !== null && testItem.expected !== null) {
-                    expect(result.constructor.name).toEqual(testItem.expected.className);
-                    expect(result._faTag.kind).toEqual(testItem.expected.kind);
+                    expect(result.constructor.name).toEqual(testItem.expected?.className);
+                    expect(result['_faTag'].kind).toEqual(testItem.expected?.kind);
                 } else {
                     expect(result).toBeNull();
                     expect(testItem.expected).toBeNull();
                 }
-            })
+            });
         }
-    })
-})
+    });
+});

@@ -1,24 +1,33 @@
-import StateInline from "markdown-it/lib/rules_inline/state_inline";
-import { FontawesomeOption, DefaultOption } from "./FontawesomeOption";
-import { FaTokenizerBase } from "./FaTagTokenizer";
-import { MarkdownItEngineBase } from "./MarkdownItEngineBase";
+import type { StateInline } from 'markdown-it';
+import { FaTokenizerBase } from './FaTagTokenizer';
+import { FaTagRuleEngineBase } from './FaTagRuleEngineBase';
 
-export class FaTagRuleEngine extends MarkdownItEngineBase<FontawesomeOption> {
-
-    rule(state: StateInline, silent: boolean): boolean {
-        var detected = false;
-        var tokenizer = FaTokenizerBase.createTokenizer(state, silent, this._option ?? DefaultOption);
-        if (tokenizer !== null) {
-            detected = true;
-            tokenizer.run();
-        }
-        return detected;
+/**
+ * FaTagRuleEngine:
+ * This class extends FaTagRuleEngineBase to implement the rule for processing Fontawesome tags.
+ */
+export class FaTagRuleEngine extends FaTagRuleEngineBase {
+    /**
+     * run method:
+     * This method runs the tokenizer to process Fontawesome tags.
+     * @param state passed state of the Markdown parser.
+     * @param silent silent mode, if true, the tokenizer will not push tokens to the state.
+     * @returns whether the rule was successfully applied or not.
+     */
+    public run(state: StateInline, silent: boolean): boolean {
+        const result = FaTokenizerBase.createTokenizer(state, silent, this._detector)?.run() || null;
+        return result !== null;
     }
-    use() {
-        this._md.inline.ruler.push(
-            'fontawesome_tag',
-            (state, silent) => {
-                return this.rule(state, silent);
-            });
+    /**
+     * use method:
+     * This method registers the Fontawesome tag rule with the MarkdownIt instance.
+     * It allows the rule to be applied during the parsing process.
+     * @returns this instance for method chaining.
+     */
+    public use(): this {
+        this._md.inline.ruler.push('fontawesome_tag', (state, silent) => {
+            return this.run(state, silent);
+        });
+        return this;
     }
 }

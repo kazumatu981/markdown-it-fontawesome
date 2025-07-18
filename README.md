@@ -75,13 +75,15 @@ goes to in html like this.
 ## How To Use
 
 Here is the how to use `markdow-it-fontawesome`.
+
+### on marp
 This section introduce how to create Marp slides-deck project,
 and introduce how to create Marp slides-deck server.
 
 You can find deltail info in [here](https://marp.app/),
 and you can learn about marp plugin eco-system, [here](https://marpit.marp.app/usage?id=extend-marpit-by-plugins).
 
-### **[1st step]** Create Slides-deck project
+#### **[1st step]** Create Slides-deck project
 
 First, for create slides-deck, you have to prepair to **Marp Project** directory.
 So First, Create slides-deck project, and init npm package.
@@ -102,7 +104,7 @@ npm install -D @marp-team/marp-cli
 
 > Off-course you can install as **global package** (like `npm install -g @marp-team/marp-cli`), or **run at-once** (like `npx`).
 
-### **[2nd step]** Download this project and install
+#### **[2nd step]** Download this project and install
 
 ```bash
 cd myslides
@@ -110,18 +112,19 @@ npm install -D @kazumatu981/markdown-it-fontawesome
 ```
 
 
-### **[3rd step]** Create `marp.config.js`.
+#### **[3rd step]** Create `marp.config.js`.
 
 Here is the configuration file for **Marp**.
 
 ```javascript
+const markdownItFontawesome = require('@kazumatu981/markdown-it-fontawesome')
 module.exports = {
     inputDir: './slides',
-    engine: ({ marp }) => marp.use(require('@kazumatu981/markdown-it-fontawesome'))
+    engine: ({ marp }) => marp.use(markdownItFontawesome.plugin)
 }
 ```
 
-### **[4th step]** Create your slides
+#### **[4th step]** Create your slides
 
 On `slies` directory. you create slides-deck. like this.
 
@@ -136,7 +139,7 @@ On `slies` directory. you create slides-deck. like this.
 
 > Please import fontawesome's open source `css` from *CDN repository* with `<style>`.
 
-### **[5th step]** run server
+#### **[5th step]** run server
 
 Run marp server.
 

@@ -3,46 +3,27 @@
     "configurations": [
         {
             "type": "node",
+            "name": "vscode-jest-tests.v2",
             "request": "launch",
-            "name": "Jest single run all tests",
-            "program": "${workspaceRoot}/node_modules/jest-cli/bin/jest.js",
+            "program": "${workspaceFolder}/node_modules/.bin/jest",
             "args": [
-                "--verbose",
-                "-i",
-                "--no-cache"
+                "--config",
+                "${workspaceFolder}/jest.config.cjs",
+              "--runInBand",
+              "--watchAll=false",
+              "--testNamePattern",
+              "${jest.testNamePattern}",
+              "--runTestsByPath",
+              "${jest.testFile}"
             ],
+            "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Jest watch all tests",
-            "program": "${workspaceRoot}/node_modules/jest-cli/bin/jest.js",
-            "args": [
-                "--verbose",
-                "-i",
-                "--no-cache",
-                "--watchAll"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Jest watch current file",
-            "program": "${workspaceFolder}/node_modules/jest-cli/bin/jest",
-            "args": [
-                "${fileBasename}",
-                "--verbose",
-                "-i",
-                "--no-cache",
-                "--watchAll"
-            ],
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen"
-        },
+            "internalConsoleOptions": "neverOpen",
+            "disableOptimisticBPs": true,
+            "windows": {
+              "program": "${workspaceFolder}/node_modules/jest/bin/jest"
+            }
+          },
         {
             "command": "npm run demo",
             "name": "Run npm demo",
