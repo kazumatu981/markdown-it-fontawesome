@@ -187,6 +187,9 @@ export class TagDetector {
     private get _styledFaTagPattern(): string {
         return `\\[ *${this._simpleFaTagPattern} *\\]\\{ *${STYLE_CLASSES_TAG_PATTERN} *\\}`;
     }
+    private get _shortStyledFaTagPattern(): string {
+        return `*${this._simpleFaTagPattern} *\\{ *${STYLE_CLASSES_TAG_PATTERN} *\\}`;
+    }
     // #endregion
 
     // #region "private methods"
