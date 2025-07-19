@@ -29,21 +29,14 @@ describe('fa tag render test', () => {
         expect(html).toMatch(expected);
     });
     test("styled tag. '[:fa fa-user:]{.red}'", () => {
-        const test = '[:fa fa-user:]{.red}';
+        const test = ':fa fa-user:{.red}';
         const expected = '<p><span class="red"><i class="fa fa-user"></i></span></p>';
         const md = prepairMarkdownIt(undefined);
         const html = md.render(test);
         expect(html).toMatch(expected);
     });
-    test("ignore style on setted. '[:fa fa-user:]{.red}'", () => {
-        const test = '[:fa fa-user:]{.red}';
-        const expected = '<p>[<i class="fa fa-user"></i>]{.red}</p>';
-        const md = prepairMarkdownIt({ ignoreStyled: true });
-        const html = md.render(test);
-        expect(html).toMatch(expected);
-    });
     test("ignore style on not to set. '[:fa fa-user:]{.red}'", () => {
-        const test = '[:fa fa-user:]{.red}';
+        const test = ':fa fa-user:{.red}';
         const expected = '<p><span class="red"><i class="fa fa-user"></i></span></p>';
         const md = prepairMarkdownIt({});
         const html = md.render(test);
@@ -80,8 +73,8 @@ describe('fa tag render test', () => {
         const html = md.render(test);
         expect(html).toMatch(expected);
     });
-    test("stacking styled tag. '[:fa fa-yyy: [:fa fa-xxx:]{.red}]'", () => {
-        const test = '[:fa fa-yyy: [:fa fa-xxx:]{.red}]';
+    test("stacking styled tag. '[:fa fa-yyy: :fa fa-xxx:{.red}]'", () => {
+        const test = '[:fa fa-yyy: :fa fa-xxx:{.red}]';
         const expected =
             '<p>' +
             '<span class="fa-stack">' +

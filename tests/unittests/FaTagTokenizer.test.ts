@@ -17,7 +17,6 @@ describe('FaTagTokenizer', () => {
                 description: 'simple tag case.',
                 test: {
                     target: ':fa-camera:',
-                    option: { ignoreStyled: false },
                 },
                 expected: {
                     className: 'FaTagTokenizer',
@@ -27,8 +26,7 @@ describe('FaTagTokenizer', () => {
             {
                 description: 'styled tag case.',
                 test: {
-                    target: '[:fa-camera:]{.red}',
-                    option: { ignoreStyled: false },
+                    target: ':fa-camera:{.red}',
                 },
                 expected: {
                     className: 'FaTagTokenizer',
@@ -49,8 +47,7 @@ describe('FaTagTokenizer', () => {
             {
                 description: 'stacking tag case with style.',
                 test: {
-                    target: '[:fa-camera: [:fa-camera:]{.red}]',
-                    option: { ignoreStyled: false },
+                    target: '[:fa-camera: :fa-camera:{.red}]',
                 },
                 expected: {
                     className: 'StackingFaTagTokenizer',
@@ -61,23 +58,6 @@ describe('FaTagTokenizer', () => {
                 description: 'unexpected',
                 test: {
                     target: '[:fa-camera: :fa-camera:{.red]',
-                    option: { ignoreStyled: false },
-                },
-                expected: null,
-            },
-            {
-                description: 'styled tag case(ignore style).',
-                test: {
-                    target: '[:fa-camera:]{.red}',
-                    option: { ignoreStyled: true },
-                },
-                expected: null,
-            },
-            {
-                description: 'stacking tag case(ignorestyle).',
-                test: {
-                    target: '[:fa-camera::fa-camera:{.red}]',
-                    option: { ignoreStyled: true },
                 },
                 expected: null,
             },
