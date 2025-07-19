@@ -13,6 +13,10 @@ import {
 export abstract class FaTagBase {
     protected readonly _detectedTag: DetectedTag;
 
+    protected get _detector(): TagDetector {
+        return this._detectedTag.detector;
+    }
+
     /**
      * Returns the kind of the detected tag.
      * @returns The kind of the detected tag.
@@ -108,6 +112,9 @@ export class SimpleFaTag extends FaTagBase {
         return `${this.icons.join(' ')}`;
     }
 
+    private getIconsAsTagString(): string {
+        return `${this._detector.simpleFaTagStart}${this.getIconsAsString()}${this._detector.simpleFaTagEnd}`;
+    }
     /**
      * Returns the styles as a string, prefixed with a dot and concatenated with spaces.
      * @param removeComma If true, removes the comma from the styles string.
@@ -117,16 +124,21 @@ export class SimpleFaTag extends FaTagBase {
         return removeComma ? `${this.styles.join(' ')}` : `${this.styles.map((style) => '.' + style).join(' ')}`;
     }
 
+    private getStylesAsTagString(): string {
+        return this.hasStyle
+            ? `${this._detector.styleTagStart}${this.getStylesAsString(false)}${this._detector.styleTagEnd}`
+            : '';
+    }
+
     /**
      * Converts the FontAwesome tag to a string representation.
      * If the tag has styles, it formats it as `[:icons:]{styles}`, otherwise as `:icons:`.
      * @returns A string representation of the FontAwesome tag.
      */
     public toString(): string {
-        const icons = this.getIconsAsString();
-        const styles = this.getStylesAsString(false);
-        return !this.hasStyle ? `:${icons}:` : `[:${icons}:]{${styles}}`;
+        return `${this.getIconsAsTagString()}${this.getStylesAsTagString()}`;
     }
+
     protected _setParsed(): void {
         if (this._icons && this._styles) {
             return; // already parsed

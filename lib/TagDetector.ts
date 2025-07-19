@@ -7,6 +7,8 @@ const STYLE_CLASSES_TAG_PATTERN = `\\.${HYPHEN_CONNECTED_ALPHA_PATTERN}( +\\.${H
 
 const DEFAULT_SIMPLE_FA_TAG_START = ':';
 const DEFAULT_SIMPLE_FA_TAG_END = ':';
+const DEFAULT_STYLE_FA_TAG_START = '{';
+const DEFAULT_STYLE_FA_TAG_END = '}';
 const DEFAULT_STACKING_FA_TAG_START = '[';
 const DEFAULT_STACKING_FA_TAG_END = ']';
 
@@ -14,12 +16,14 @@ const DEFAULT_STACKING_FA_TAG_END = ']';
  * Options for TagDetector
  */
 export interface TagDetectorOptions {
-    /** ignore styled fa tags */
-    ignoreStyled?: boolean;
     /** start tag for simple fa tags */
     simpleFaTagStart?: string;
     /** end tag for simple fa tags */
     simpleFaTagEnd?: string;
+    /** start tag for style */
+    styleTagStart?: string;
+    /** end tag for style */
+    styleTagEnd?: string;
     /** start tag for stacking fa tags */
     stackingFaTagStart?: string;
     /** end tag for stacking fa tags */
@@ -101,6 +105,20 @@ export class TagDetector {
         return this._options?.simpleFaTagEnd ?? DEFAULT_SIMPLE_FA_TAG_END;
     }
     /**
+     * Gets the start tag for style Fontawesome tags.
+     * @returns The start tag for style Fontawesome tags.
+     */
+    public get styleTagStart(): string {
+        return this._options?.styleTagStart ?? DEFAULT_STYLE_FA_TAG_START;
+    }
+    /**
+     * Gets the end tag for style Fontawesome tags.
+     * @returns The end tag for style Fontawesome tags.
+     */
+    public get styleTagEnd(): string {
+        return this._options?.styleTagEnd ?? DEFAULT_STYLE_FA_TAG_END;
+    }
+    /**
      * Gets the start tag for stacking Fontawesome tags.
      * @returns The start tag for stacking Fontawesome tags.
      */
@@ -137,11 +155,6 @@ export class TagDetector {
             return null;
         }
 
-        const isStyled = result.indexOf('{') > 0;
-        if (isStyled && (this._options?.ignoreStyled ?? false)) {
-            return null;
-        }
-
         return {
             kind: 'fa',
             src: result,
@@ -160,10 +173,6 @@ export class TagDetector {
             return null;
         }
 
-        const isStyled = result.indexOf('{') > 0;
-        if (isStyled && (this._options?.ignoreStyled ?? false)) {
-            return null;
-        }
         return {
             kind: 'stacking-fa',
             src: result,
@@ -176,7 +185,7 @@ export class TagDetector {
     // #region "non-public members"
     // #region "private properties"
     private get _faTagPattern(): string {
-        return `((${this._simpleFaTagPattern})|(${this._styledFaTagPattern}))`;
+        return `(${this._simpleFaTagPattern})(${this._styleTagPattern})?`;
     }
     private get _stackingFaTagPattern(): string {
         return `\\${this.stackingFaTagStart}( *${this._faTagPattern}){2,} *\\${this.stackingFaTagEnd}`;
@@ -184,8 +193,8 @@ export class TagDetector {
     private get _simpleFaTagPattern(): string {
         return `\\${this.simpleFaTagStart}${FA_CLASSES_TAG_PATTERN}\\${this.simpleFaTagEnd}`;
     }
-    private get _styledFaTagPattern(): string {
-        return `\\[ *${this._simpleFaTagPattern} *\\]\\{ *${STYLE_CLASSES_TAG_PATTERN} *\\}`;
+    private get _styleTagPattern(): string {
+        return `\\${this.styleTagStart}${STYLE_CLASSES_TAG_PATTERN}\\${this.styleTagEnd}`;
     }
     // #endregion
 

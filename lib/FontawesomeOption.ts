@@ -13,6 +13,4 @@ export interface FontawesomeOption extends TagDetectorOptions {}
  * The default options for the Fontawesome plugin.
  * It sets ignoreStyled to false, meaning styled Fontawesome tags will not be ignored.
  */
-export const DEFAULT_FONTAWESOME_OPTIONS: FontawesomeOption = {
-    ignoreStyled: false,
-};
+export const DEFAULT_FONTAWESOME_OPTIONS: FontawesomeOption = {};

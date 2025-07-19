@@ -1,6 +1,6 @@
 {
     "name": "@kazumatu981/markdown-it-fontawesome",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "description": "markdown-it plugin to be able to use fontawesome",
     "main": "dist/cjs/index.js",
     "module": "dist/esm/index.js",
@@ -54,8 +54,5 @@
         "ts-jest": "^29.1.0",
         "typescript": "^5.8.3",
         "typescript-eslint": "^8.32.1"
-    },
-    "dependencies": {
-        "@eslint/mcp": "^0.1.0"
     }
 }
