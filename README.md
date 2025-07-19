@@ -11,11 +11,15 @@ Please enjoy.
 
 ### Simple icon
 
-| description          | Markdown               | HTML                                                         |
-| -------------------- | ---------------------- | ------------------------------------------------------------ |
-| Simple icon          | `:fa fa-user:`         | `<p><i class="fa fa-user"></i></p>`                          |
-| Styled icon (Short)  | `:fa fa-user:{.red}`   | `<p><span class="red"><i class="fa fa-user"></i></span></p>` |
-| Styled icon (Legacy) | `[:fa fa-user:]{.red}` | `<p><span class="red"><i class="fa fa-user"></i></span></p>` |
+| description | Markdown             | HTML                                                         |
+| ----------- | -------------------- | ------------------------------------------------------------ |
+| Simple icon | `:fa fa-user:`       | `<p><i class="fa fa-user"></i></p>`                          |
+| Styled icon | `:fa fa-user:{.red}` | `<p><span class="red"><i class="fa fa-user"></i></span></p>` |
+
+> **remark**
+>
+> Before `v2.0.*`, you could specify styles using the format `[:fa fa-user:]{.red}`,
+> but considering conflicts with other packages, it has been changed to `:fa fa-user:{.red}`.
 
 ### Stacking icons
 
